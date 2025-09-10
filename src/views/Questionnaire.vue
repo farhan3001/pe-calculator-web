@@ -13,7 +13,7 @@
         <FormInput id="nama" label="Nama" :modelValue="form.nama" @update:modelValue="val => form.nama = val" />
         <FormInput id="email" label="Email" :modelValue="form.email" @update:modelValue="val => form.email = val" />
         <FormInput id="noHp" label="No HP" :modelValue="form.noHp" @update:modelValue="val => form.noHp = val" />
-        <FormInput id="namaFaskes" label="Nama faskes" :modelValue="form.namaFaskes"
+        <FormInput id="namaFaskes" label="Nama Faskes" :modelValue="form.namaFaskes"
           @update:modelValue="val => form.namaFaskes = val" />
       </div>
 
