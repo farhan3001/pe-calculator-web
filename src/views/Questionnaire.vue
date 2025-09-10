@@ -2,8 +2,8 @@
   <div class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
     <div class="bg-white p-8 rounded-3xl shadow-md w-full max-w-4xl">
 
-      <div class="flex justify-center mb-6">
-        <img src="@/assets/logo_safe_prenatal.png" alt="Safe Prenatal Logo" class="h-12" />
+      <div class="flex justify-center">
+        <img src="@/assets/logo_safe_prenatal.png" alt="Safe Prenatal Logo" class="h-32" />
       </div>
 
       <h1 class="text-2xl font-semibold text-center mb-8">Pre-Eclampsia Kalkulator</h1>
