@@ -5,7 +5,7 @@
       :id="id"
       :value="modelValue"
       @change="$emit('update:modelValue', $event.target.value)"
-      class="w-full border border-gray-300 p-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black"
+      class="w-full border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black"
     >
       <option value="" disabled>Pilih...</option>
       <option
