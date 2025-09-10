@@ -1,7 +1,12 @@
 <template>
   <div class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
     <div class="bg-white p-8 rounded-3xl shadow-md w-full max-w-4xl">
-      <h1 class="text-2xl font-semibold text-center mb-8">Formulir Pemeriksaan Pre-Eclampsia</h1>
+
+      <div class="flex justify-center mb-6">
+        <img src="@/assets/logo_safe_prenatal.png" alt="Safe Prenatal Logo" class="h-12" />
+      </div>
+
+      <h1 class="text-2xl font-semibold text-center mb-8">Pre-Eclampsia Kalkulator</h1>
 
       <!-- Personal Info -->
       <div class="grid grid-cols-1 gap-4 mb-8">
@@ -15,25 +20,27 @@
       <div class="border-t border-dashed border-gray-400 my-6"></div>
 
       <!-- Questionnaire -->
-      <h2 class="text-lg font-semibold mb-4">Questionnaire</h2>
+      <h2 class="text-lg font-semibold mb-4">Daftar Pertanyaan</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <FormInput id="hpht" label="HPHT" type="date" :modelValue="form.hpht"
           @update:modelValue="val => form.hpht = val" />
-        <FormSelect id="kehamilanPertama" label="Kehamilan pertama" :modelValue="form.kehamilanPertama"
+        <FormSelect id="kehamilanPertama" label="Kehamilan Pertama" :modelValue="form.kehamilanPertama"
           @update:modelValue="val => form.kehamilanPertama = val" :options="yesNoOptions" />
-        <FormInput id="intervalKehamilan" label="Interval kehamilan (tahun)" type="number"
+        <FormInput id="usiaIbu" label="Usia Ibu" type="number" :modelValue="form.usiaIbu"
+          @update:modelValue="val => form.usiaIbu = val" />
+        <FormInput id="intervalKehamilan" label="Interval Kehamilan (Tahun)" type="number"
           :modelValue="form.itervalKehamilan" @update:modelValue="val => form.itervalKehamilan = val" />
-        <FormSelect id="conceptionMethod" label="Conception method (cara kehamilan)" :modelValue="form.conceptionMethod"
+        <FormSelect id="conceptionMethod" label="Conception Method (Cara Kehamilan)" :modelValue="form.conceptionMethod"
           @update:modelValue="val => form.conceptionMethod = val" :options="conceptionOptions" />
-        <FormSelect id="riwayatHamilPe" label="Riwayat hamil dengan PE" :modelValue="form.riwayatHamilPe"
+        <FormSelect id="riwayatHamilPe" label="Riwayat Hamil Dengan PE" :modelValue="form.riwayatHamilPe"
           @update:modelValue="val => form.riwayatHamilPe = val" :options="yesNoOptions" />
-        <FormSelect id="riwayatDiabetesMelitus" label="Riwayat diabetes melitus"
+        <FormSelect id="riwayatDiabetesMelitus" label="Riwayat Diabetes Melitus"
           :modelValue="form.riwayatdiabetesMelitus" @update:modelValue="val => form.riwayatdiabetesMelitus = val"
           :options="yesNoOptions" />
-        <FormSelect id="riwayatHipertensiKronik" label="Riwayat hipertensi kronik"
+        <FormSelect id="riwayatHipertensiKronik" label="Riwayat Hipertensi Kronik"
           :modelValue="form.riwayatHipertensiKronik" @update:modelValue="val => form.riwayatHipertensiKronik = val"
           :options="yesNoOptions" />
-        <FormSelect id="riwayatIbuSaudaraPerempuanPe" label="Riwayat ibu/saudara perempuan PE"
+        <FormSelect id="riwayatIbuSaudaraPerempuanPe" label="Riwayat Ibu/Saudara Perempuan PE"
           :modelValue="form.riwayatIbuSaudaraPerempuanPe"
           @update:modelValue="val => form.riwayatIbuSaudaraPerempuanPe = val" :options="yesNoOptions" />
       </div>
@@ -41,7 +48,7 @@
       <div class="border-t border-dashed border-gray-400 my-6"></div>
 
       <!-- Body Measurements Header -->
-      <h2 class="text-lg font-semibold mb-4">Body Measurements</h2>
+      <h2 class="text-lg font-semibold mb-4">Ukuran Tubuh</h2>
 
       <!-- Section 1 -->
       <div class="mb-6">
@@ -120,14 +127,15 @@
       </div>
 
       <!-- BMI input -->
-      <div class="mb-12" >
-        <FormInput id="bmi" label="BMI" type="number" :modelValue="form.bmi" @update:modelValue="val => form.bmi = val"/>
+      <div class="mb-12">
+        <FormInput id="bmi" label="BMI" type="number" :modelValue="form.bmi"
+          @update:modelValue="val => form.bmi = val" />
       </div>
 
       <div class="border-t border-dashed border-gray-400 my-6"></div>
 
       <!-- USG Test -->
-      <h2 class="text-lg font-semibold mb-4">USG Test</h2>
+      <h2 class="text-lg font-semibold mb-4">Tes USG</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <FormInput id="utpi" label="UtPI" :modelValue="form.utpi" @update:modelValue="val => form.utpi = val" />
         <FormInput id="oph" label="Oph" :modelValue="form.oph" @update:modelValue="val => form.oph = val" />
@@ -135,9 +143,9 @@
 
       <div class="border-t border-dashed border-gray-400 my-6"></div>
 
-      <h2 class="text-lg font-semibold mb-4">USG Test</h2>
-      <div class="mb-8" >
-        <FormInput id="plgf" label="PLGF" :modelValue="form.plgf" @update:modelValue="val => form.plgf = val"/>
+      <h2 class="text-lg font-semibold mb-4">Tes Lab</h2>
+      <div class="mb-8">
+        <FormInput id="plgf" label="PLGF" :modelValue="form.plgf" @update:modelValue="val => form.plgf = val" />
       </div>
 
       <!-- Submit Button -->
@@ -157,7 +165,7 @@ import { submitFormData } from '../services/api'
 
 const form = ref({
   nama: '', email: '', noHp: '', namaFaskes: '',
-  hpht: '', kehamilanPertama: '', itervalKehamilan: '', conceptionMethod: '',
+  hpht: '', kehamilanPertama: '', usiaIbu: '', itervalKehamilan: '', conceptionMethod: '',
   riwayatHamilPe: '', riwayatdiabetesMelitus: '', riwayatHipertensiKronik: '', riwayatIbuSaudaraPerempuanPe: '',
   systoleKiri1: '', diastoleKiri1: '', systoleKanan1: '', diastoleKanan1: '',
   systoleKiri2: '', diastoleKiri2: '', systoleKanan2: '', diastoleKanan2: '',

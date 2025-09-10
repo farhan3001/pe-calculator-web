@@ -6,6 +6,7 @@ export const convertFormToJSON = (form) => {
     namaFaskes: String(form.namaFaskes),
     hpht: String(form.hpht),
     kehamilanPertama: form.kehamilanPertama,
+    usiaIbu: form.usiaIbu,
     itervalKehamilan:
       parseInt(form.itervalKehamilan) >= 1 && parseInt(form.itervalKehamilan) < 10 ? '1' : '0',
     conceptionMethod: form.conceptionMethod,
@@ -31,7 +32,7 @@ export const convertFormToJSON = (form) => {
 export const validateForm = (form) => {
   // Required fields (except plgf)
   const requiredFields = [
-    'nama', 'email', 'noHp', 'namaFaskes', 'hpht',
+    'nama', 'email', 'noHp', 'namaFaskes', 'hpht', 'usiaIbu',
     'kehamilanPertama', 'itervalKehamilan', 'conceptionMethod',
     'riwayatHamilPe', 'riwayatdiabetesMelitus',
     'riwayatHipertensiKronik', 'riwayatIbuSaudaraPerempuanPe',
