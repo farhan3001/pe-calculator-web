@@ -121,7 +121,7 @@
 
       <!-- BMI input -->
       <FormInput id="bmi" label="BMI" type="number" :modelValue="form.bmi" @update:modelValue="val => form.bmi = val"
-        class="mb-12" />
+        class="mb-8" />
 
       <div class="border-t border-dashed border-gray-400 my-6"></div>
 
@@ -132,9 +132,11 @@
         <FormInput id="oph" label="Oph" :modelValue="form.oph" @update:modelValue="val => form.oph = val" />
       </div>
 
+      <div class="border-t border-dashed border-gray-400 my-6"></div>
+
       <h2 class="text-lg font-semibold mb-4">USG Test</h2>
       <FormInput id="plgf" label="PLGF" :modelValue="form.plgf" @update:modelValue="val => form.plgf = val"
-        class="mb-16" />
+        class="mb-8" />
 
       <!-- Submit Button -->
       <button @click="submitForm" class="w-full bg-green-700 text-white py-2 px-4 rounded hover:bg-green-700">
