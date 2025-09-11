@@ -13,7 +13,7 @@
         @blur="isOpen = false"
         class="w-full appearance-none border border-gray-300 p-2 pr-16 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black"
       >
-        <option value="" disabled>Pilih...</option>
+        <option disabled value="" hidden>Pilih...</option>
         <option
           v-for="(option, index) in options"
           :key="index"
