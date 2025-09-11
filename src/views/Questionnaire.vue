@@ -90,10 +90,8 @@
         </div>
       </div>
 
-      <!-- Dashed divider -->
       <hr class="my-6 border-dashed" />
 
-      <!-- Section 2 -->
       <div class="mb-8">
         <!-- Systole II -->
         <div class="grid grid-cols-[120px_1fr_1fr] gap-4 items-center mb-2">
@@ -127,7 +125,7 @@
       </div>
 
       <!-- BMI input -->
-      <div class="mb-12">
+      <div class="mb-8">
         <FormInput id="bmi" label="BMI" type="number" :modelValue="form.bmi"
           @update:modelValue="val => form.bmi = val" />
       </div>
@@ -143,6 +141,7 @@
 
       <div class="border-t border-dashed border-gray-400 my-6"></div>
 
+      <!-- Lab Test -->
       <h2 class="text-lg font-semibold mb-4">Tes Lab</h2>
       <div class="mb-8">
         <FormInput id="plgf" label="PLGF" :modelValue="form.plgf" @update:modelValue="val => form.plgf = val" />
