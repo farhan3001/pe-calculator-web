@@ -48,7 +48,7 @@
       <div class="border-t border-dashed border-gray-400 my-6"></div>
 
       <!-- Body Measurements Header -->
-      <h2 class="text-lg font-semibold mb-4">Ukuran Tubuh</h2>
+      <h2 class="text-lg font-semibold mb-4">Pengukuran Tubuh</h2>
 
       <!-- Section 1 -->
       <div class="mb-6">
@@ -94,7 +94,7 @@
       <hr class="my-6 border-dashed" />
 
       <!-- Section 2 -->
-      <div class="mb-4">
+      <div class="mb-8">
         <!-- Systole II -->
         <div class="grid grid-cols-[120px_1fr_1fr] gap-4 items-center mb-2">
           <span class="text-sm font-medium">Systole II</span>
