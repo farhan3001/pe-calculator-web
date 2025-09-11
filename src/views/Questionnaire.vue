@@ -125,7 +125,7 @@
       </div>
 
       <!-- BMI input -->
-      <div class="mb-8">
+      <div class="mb-12">
         <FormInput id="bmi" label="BMI" type="number" :modelValue="form.bmi"
           @update:modelValue="val => form.bmi = val" />
       </div>
