@@ -201,11 +201,9 @@ const submitForm = async () => {
     const response = await submitFormData(payload)
     alert('Form berhasil dikirim!')
     console.log('Response:', response)
-    console.log('Payload:', payload)
   } catch (err) {
     console.error('Submit error:', err)
-    console.log(payload)
-    alert(payload)
+    alert('Terjadi kesalahan saat mengirim data.')
   }
 }
 </script>
