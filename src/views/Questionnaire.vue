@@ -25,7 +25,7 @@
         <FormInput id="hpht" label="HPHT" type="date" :modelValue="form.hpht"
           @update:modelValue="val => form.hpht = val" />
         <FormSelect id="kehamilanPertama" label="Kehamilan Pertama" :modelValue="form.kehamilanPertama"
-          @update:modelValue="val => form.kehamilanPertama = val" :options="yesNoOptions" />
+          @update:modelValue="val => form.kehamilanPertama = val" :options="kehamilanPertamaOptions" />
         <FormInput id="usiaIbu" label="Usia Ibu" type="number" :modelValue="form.usiaIbu"
           @update:modelValue="val => form.usiaIbu = val" />
         <FormInput id="intervalKehamilan" label="Interval Kehamilan (Tahun)" type="number"
@@ -177,6 +177,11 @@ const yesNoOptions = [
   { text: 'Tidak', value: '0' }
 ]
 
+const kehamilanPertamaOptions = [
+  { text: 'Ya', value: '0' },
+  { text: 'Tidak', value: '1' }
+]
+
 const conceptionOptions = [
   { text: 'Spontan', value: '0' },
   { text: 'IVF/insemnasi buatan', value: '1' }
@@ -196,9 +201,11 @@ const submitForm = async () => {
     const response = await submitFormData(payload)
     alert('Form berhasil dikirim!')
     console.log('Response:', response)
+    console.log('Payload:', payload)
   } catch (err) {
     console.error('Submit error:', err)
-    alert('Terjadi kesalahan saat mengirim data.')
+    console.log(payload)
+    alert(payload)
   }
 }
 </script>
