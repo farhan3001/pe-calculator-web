@@ -1,14 +1,15 @@
 import axios from 'axios'
 
-const BASE_URL = import.meta.env.BASE_URL
+const baseUrl = process.env.VUE_APP_API_URL
+const apiKey = process.env.VUE_APP_API_KEY
 
-const URL_POST_PE = import.meta.env.URL_POST_PE
-const API_KEY = import.meta.env.API_KEY
+const urlPostPe = process.env.VUE_APP_URL_POST_PE
 
 export const submitFormData = (data) => {
-  return axios.post(`${BASE_URL}${URL_POST_PE}`, data, {
+
+  return axios.post(`${baseUrl}${urlPostPe}`, data, {
     headers: {
-      'x-api-key': API_KEY,
+      'x-api-key': apiKey,
       'Content-Type': 'application/json',
     }
   })
