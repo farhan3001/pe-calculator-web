@@ -125,9 +125,11 @@
       </div>
 
       <!-- BMI input -->
-      <div class="mb-12">
-        <FormInput id="bmi" label="BMI" type="number" :modelValue="form.bmi"
-          @update:modelValue="val => form.bmi = val" />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <FormInput id="tinggi" label="Tingi Badan (cm)" type="number" :modelValue="form.tinggi"
+          @update:modelValue="val => form.tinggi = val" />
+        <FormInput id="berat" label="Berat Badan (kg)" type="number" :modelValue="form.berat"
+          @update:modelValue="val => form.berat = val" />
       </div>
 
       <div class="border-t border-dashed border-gray-400 my-6"></div>
@@ -168,7 +170,7 @@ const form = ref({
   riwayatHamilPe: '', riwayatdiabetesMelitus: '', riwayatHipertensiKronik: '', riwayatIbuSaudaraPerempuanPe: '',
   systoleKiri1: '', diastoleKiri1: '', systoleKanan1: '', diastoleKanan1: '',
   systoleKiri2: '', diastoleKiri2: '', systoleKanan2: '', diastoleKanan2: '',
-  bmi: '', utpi: '', oph: '', plgf: ''
+  berat: '', tinggi: '', utpi: '', oph: '', plgf: ''
 })
 
 const yesNoOptions = [
@@ -186,15 +188,31 @@ const conceptionOptions = [
   { text: 'IVF/insemnasi buatan', value: '1' }
 ]
 
+const bmiData = form.value.berat/(form.value.tinggi/100)**2
+
 const submitForm = async () => {
-  const payload = { ...form.value }
+
+  const data = { ...form.value }
+
+  const { valid, message } = validateForm(data)
+  if (!valid) return alert(message)
+
+  const submittedForm = ref({
+    nama: form.value.nama, email: form.value.email, noHp: form.value.noHp, namaFaskes: form.value.namaFaskes,
+    hpht: form.value.hpht, kehamilanPertama: form.value.kehamilanPertama, usiaIbu: form.value.usiaIbu, 
+    itervalKehamilan: form.value.itervalKehamilan, conceptionMethod: form.value.conceptionMethod,
+    riwayatHamilPe: form.value.riwayatHamilPe, riwayatdiabetesMelitus: form.value.riwayatdiabetesMelitus, 
+    riwayatHipertensiKronik: form.value.riwayatHipertensiKronik, riwayatIbuSaudaraPerempuanPe: form.value.riwayatIbuSaudaraPerempuanPe,
+    systoleKiri1: form.value.systoleKiri1, diastoleKiri1: form.value.diastoleKiri1, systoleKanan1: form.value.systoleKanan1, diastoleKanan1: form.value.diastoleKanan1,
+    systoleKiri2: form.value.systoleKiri2, diastoleKiri2: form.value.diastoleKiri2, systoleKanan2: form.value.systoleKanan2, diastoleKanan2: form.value.diastoleKanan2,
+    bmi: bmiData, utpi: form.value.utpi, oph: form.value.oph, plgf: form.value.plgf
+  })
+
+  const payload = { ...submittedForm.value }
 
   // Transform interval kehamilan rule
   const interval = Number(payload.itervalKehamilan)
   payload.itervalKehamilan = (interval >= 1 && interval <= 9) ? '1' : '0'
-
-  const { valid, message } = validateForm(payload)
-  if (!valid) return alert(message)
 
   try {
     const response = await submitFormData(payload)
