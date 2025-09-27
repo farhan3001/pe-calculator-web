@@ -136,9 +136,9 @@
 
       <!-- USG Test -->
       <h2 class="text-lg font-semibold mb-4">Tes USG</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <FormInput id="utpi" label="UtPI" :modelValue="form.utpi" @update:modelValue="val => form.utpi = val" />
-        <FormInput id="oph" label="Oph" :modelValue="form.oph" @update:modelValue="val => form.oph = val" />
+      <div class="mb-8">
+        <FormInput id="utpi" label="Hasil Analisis USG" :modelValue="form.utpi" @update:modelValue="val => form.utpi = val" />
+        <!-- <FormInput id="oph" label="Oph" :modelValue="form.oph" @update:modelValue="val => form.oph = val" /> -->
       </div>
 
       <div class="border-t border-dashed border-gray-400 my-6"></div>

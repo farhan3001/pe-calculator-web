@@ -61,7 +61,7 @@ export const validateForm = (form) => {
 
   // Validate utpi/oph (at least one must be filled)
   if (!form.utpi && !form.oph) {
-    return { valid: false, message: 'Minimal salah satu UtPI atau Oph harus diisi.' }
+    return { valid: false, message: 'Hasil analisis USG harus diisi' }
   }
 
   return { valid: true }
