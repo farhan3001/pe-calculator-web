@@ -31,15 +31,12 @@ export const convertFormToJSON = (form) => {
   }
 }
 
-export const validateForm = (form) => {
-
-  const f = form?.value ?? form 
-
-  console.log('ROLE:', String(f.role))
+export const validateForm = (form, userRole) => {
 
   var requiredFields = null
+  var fieldLabels = null
 
-  if (String(f.role) == 'dokter') {
+  if (userRole == 'dokter') {
     // Required fields (except plgf)
     requiredFields = [
       'nama', 
@@ -69,21 +66,52 @@ export const validateForm = (form) => {
       'vel1', 
       'vel2'
     ]
+
+    fieldLabels = [
+      'Nama', 
+      'Email', 
+      'No HP', 
+      'Nama Faskes', 
+      'Tanggal Lahir',
+      'Kehamilan Pertama', 
+      'Interval Kehamilan', 
+      'Conception Method',
+      'Riwayat Hamil PE', 
+      'Riwayat Diabetes Melitus',
+      'Riwayat Hipertensi Kronik', 
+      'Riwayat Ibu/Saudara Perempuan PE',
+      'Systole Kiri 1', 
+      'Diastole Kiri 1', 
+      'Systole Kanan 1', 
+      'Diastole Kanan 1',
+      'Systole Kiri 2', 
+      'Diastole Kiri 2', 
+      'Systole Kanan 2', 
+      'Diastole Kanan 2',
+      'Berat Badan', 
+      'Tinggi Badan', 
+      'UTPI Kiri',
+      'UTPI Kanan',
+      'Vel 1', 
+      'Vel 2'
+    ]
   } else {
     // Required fields (except plgf)
     requiredFields = [
-      'nama', 
-      'email', 
-      'noHp', 
-      'namaFaskes', 
-      'tglLahir',
-      'kehamilanPertama', 
-      'itervalKehamilan', 
-      'conceptionMethod',
-      'riwayatHamilPe', 
-      'riwayatdiabetesMelitus',
-      'riwayatHipertensiKronik', 
-      'riwayatIbuSaudaraPerempuanPe',
+      'multiparaPasanganBaru',
+      'teknologiReproduksi',
+      'usiaLebih35',
+      'nulipara',
+      'jarakKehamilanLebih10',
+      'riwayatPeKeluarga',
+      'obesitasSebelumHamil',
+      'riwayatPeSebelumnya',
+      'kehamilanMultipel',
+      'diabetesKehamilan',
+      'hipertensiKronik',
+      'penyakitGinjal',
+      'autoimunSLE',
+      'antiphospholipidSyndrome',
       'systoleKiri1', 
       'diastoleKiri1', 
       'systoleKanan1', 
@@ -92,40 +120,39 @@ export const validateForm = (form) => {
       'diastoleKiri2', 
       'systoleKanan2', 
       'diastoleKanan2',
-      'berat', 
-      'tinggi'
+      'proteinuria'
     ]
+
+    fieldLabels = [
+      'Multipara dengan Pasangan Baru',
+      'Kehamilan dengan Teknologi Reproduksi Berbantu',
+      'Usia Ibu ≥ 35 Tahun',
+      'Nulipara',
+      'Jarak Kehamilan Sebelumnya > 10 Tahun',
+      'Riwayat Preeklampsia pada Ibu / Saudara Perempuan',
+      'Obesitas Sebelum Hamil (IMT > 30)',
+      'Riwayat Preeklampsia Sebelumnya',
+      'Kehamilan Multipel',
+      'Diabetes dalam Kehamilan',
+      'Hipertensi Kronik',
+      'Penyakit Ginjal',
+      'Penyakit Autoimun (SLE)',
+      'Antiphospholipid Syndrome',
+      'Systole Kiri 1', 
+      'Diastole Kiri 1', 
+      'Systole Kanan 1', 
+      'Diastole Kanan 1',
+      'Systole Kiri 2', 
+      'Diastole Kiri 2', 
+      'Systole Kanan 2', 
+      'Diastole Kanan 2',
+      'Proteinuria'
+    ]
+
+
   }
 
-  const fieldLabels = [
-    'Nama', 
-    'Email', 
-    'No HP', 
-    'Nama Faskes', 
-    'Tanggal Lahir',
-    'Kehamilan Pertama', 
-    'Interval Kehamilan', 
-    'Conception Method',
-    'Riwayat Hamil PE', 
-    'Riwayat Diabetes Melitus',
-    'Riwayat Hipertensi Kronik', 
-    'Riwayat Ibu/Saudara Perempuan PE',
-    'Systole Kiri 1', 
-    'Diastole Kiri 1', 
-    'Systole Kanan 1', 
-    'Diastole Kanan 1',
-    'Systole Kiri 2', 
-    'Diastole Kiri 2', 
-    'Systole Kanan 2', 
-    'Diastole Kanan 2',
-    'Berat Badan', 
-    'Tinggi Badan', 
-    'UTPI Kiri',
-    'UTPI Kanan',
-    'Vel 1', 
-    'Vel 2'
-  ]
-
+  
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!form[field]) {
@@ -138,7 +165,7 @@ export const validateForm = (form) => {
   //   return { valid: false, message: 'Hasil analisis USG harus diisi' }
   // }
 
-  if (!form.hpl && !form.hpht) {
+  if (!form.hpl && !form.hpht && userRole == 'dokter') {
     return { valid: false, message: 'HPL/HPHT harus diisi salah satunya' }
   }
 

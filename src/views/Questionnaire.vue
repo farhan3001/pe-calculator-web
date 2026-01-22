@@ -17,18 +17,18 @@
           @update:modelValue="val => form.namaFaskes = val" />
       </div>
 
-      <!-- Role Selector -->
+      <!-- userRole Selector -->
       <div class="mb-8">
-        <FormSelect id="role" label="Dokter atau Bidan?" :modelValue="role" @update:modelValue="val => role = val"
-          :options="roleOptions" />
+        <FormSelect id="userRole" label="Dokter atau Bidan?" :modelValue="userRole.userRole" @update:modelValue="val => userRole.userRole = val"
+          :options="userRoleOptions" />
       </div>
 
+      <div v-if="userRole.userRole === 'dokter'" :key="userRole.userRole">
 
-      <div class="border-t border-dashed border-gray-400 my-6"></div>
+        <div class="border-t border-dashed border-gray-400 my-6"></div>
 
-      <div>
-        <!-- Questionnaire -->
         <h2 class="text-lg font-semibold mb-4">Daftar Pertanyaan</h2>
+        <!-- Questionnaire -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           <FormInput id="tglLahir" label="Tanggal Lahir" type="date" :modelValue="form.tglLahir"
             @update:modelValue="val => form.tglLahir = val" />
@@ -59,7 +59,91 @@
             :modelValue="form.riwayatIbuSaudaraPerempuanPe"
             @update:modelValue="val => form.riwayatIbuSaudaraPerempuanPe = val" :options="yesNoOptions" />
         </div>
+      </div>
 
+      <div v-if="userRole.userRole === 'bidan'" :key="userRole.userRole">
+
+        <div class="border-t border-dashed border-gray-400 my-6"></div>
+
+        <h2 class="text-lg font-semibold mb-4">Daftar Pertanyaan</h2>
+
+        <!-- Questionnaire -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+
+          <!-- Multipara Dengan Kehamilan oleh Pasangan Baru -->
+          <FormSelect id="multiparaPasanganBaru" label="Multipara dengan Pasangan Baru"
+            :modelValue="form.multiparaPasanganBaru" @update:modelValue="val => form.multiparaPasanganBaru = val"
+            :options="yesNoOptionsNurseLowRisk" />
+
+          <!-- Kehamilan dengan Teknologi Reproduksi Berbantu -->
+          <FormSelect id="teknologiReproduksi" label="Kehamilan dengan Teknologi Reproduksi Berbantu"
+            :modelValue="form.teknologiReproduksi" @update:modelValue="val => form.teknologiReproduksi = val"
+            :options="yesNoOptionsNurseLowRisk" />
+
+          <!-- Umur ≥ 35 Tahun -->
+          <FormSelect id="usiaLebih35" label="Usia Ibu ≥ 35 Tahun" :modelValue="form.usiaLebih35"
+            @update:modelValue="val => form.usiaLebih35 = val" :options="yesNoOptionsNurseLowRisk" />
+
+          <!-- Nulipara -->
+          <FormSelect id="nulipara" label="Nulipara" :modelValue="form.nulipara"
+            @update:modelValue="val => form.nulipara = val" :options="yesNoOptionsNurseLowRisk" />
+
+          <!-- Multipara Jarak Kehamilan > 10 Tahun -->
+          <FormSelect id="jarakKehamilanLebih10" label="Jarak Kehamilan Sebelumnya > 10 Tahun"
+            :modelValue="form.jarakKehamilanLebih10" @update:modelValue="val => form.jarakKehamilanLebih10 = val"
+            :options="yesNoOptionsNurseLowRisk" />
+
+          <!-- Riwayat Preeklampsia Ibu / Saudara -->
+          <FormSelect id="riwayatPeKeluarga" label="Riwayat Preeklampsia pada Ibu / Saudara Perempuan"
+            :modelValue="form.riwayatPeKeluarga" @update:modelValue="val => form.riwayatPeKeluarga = val"
+            :options="yesNoOptionsNurseLowRisk" />
+
+          <!-- Obesitas Sebelum Hamil -->
+          <FormSelect id="obesitasSebelumHamil" label="Obesitas Sebelum Hamil (IMT > 30)"
+            :modelValue="form.obesitasSebelumHamil" @update:modelValue="val => form.obesitasSebelumHamil = val"
+            :options="yesNoOptionsNurseLowRisk" />
+
+          <!-- Riwayat Preeklampsia Sebelumnya -->
+          <FormSelect id="riwayatPeSebelumnya" label="Riwayat Preeklampsia Sebelumnya"
+            :modelValue="form.riwayatPeSebelumnya" @update:modelValue="val => form.riwayatPeSebelumnya = val"
+            :options="yesNoOptionsNurseHighRisk" />
+
+          <!-- Kehamilan Multipel -->
+          <FormSelect id="kehamilanMultipel" label="Kehamilan Multipel" :modelValue="form.kehamilanMultipel"
+            @update:modelValue="val => form.kehamilanMultipel = val" :options="yesNoOptionsNurseHighRisk" />
+
+          <!-- Diabetes dalam Kehamilan -->
+          <FormSelect id="diabetesKehamilan" label="Diabetes dalam Kehamilan" :modelValue="form.diabetesKehamilan"
+            @update:modelValue="val => form.diabetesKehamilan = val" :options="yesNoOptionsNurseHighRisk" /> 
+
+          <!-- Hipertensi Kronik -->
+          <FormSelect id="hipertensiKronik" label="Hipertensi Kronik" :modelValue="form.hipertensiKronik"
+            @update:modelValue="val => form.hipertensiKronik = val" :options="yesNoOptionsNurseHighRisk" />
+
+          <!-- Penyakit Ginjal -->
+          <FormSelect id="penyakitGinjal" label="Penyakit Ginjal" :modelValue="form.penyakitGinjal"
+            @update:modelValue="val => form.penyakitGinjal = val" :options="yesNoOptionsNurseHighRisk" />
+
+          <!-- Penyakit Autoimun / SLE -->
+          <FormSelect id="autoimunSLE" label="Penyakit Autoimun (SLE)" :modelValue="form.autoimunSLE"
+            @update:modelValue="val => form.autoimunSLE = val" :options="yesNoOptionsNurseHighRisk" />
+
+          <!-- Antiphospholipid Syndrome -->
+          <FormSelect id="antiphospholipidSyndrome" label="Antiphospholipid Syndrome"
+            :modelValue="form.antiphospholipidSyndrome" @update:modelValue="val => form.antiphospholipidSyndrome = val"
+            :options="yesNoOptionsNurseHighRisk" />
+
+          <!-- Mean Arterial Pressure -->
+          <!-- <FormInput id="meanArterialPressure" label="Mean Arterial Pressure (mmHg)" type="number"
+            :modelValue="form.meanArterialPressure" @update:modelValue="val => form.meanArterialPressure = val" /> -->
+
+          <!-- Proteinuria -->
+          <FormSelect id="proteinuria" label="Proteinuria" :modelValue="form.proteinuria"
+            @update:modelValue="val => form.proteinuria = val" :options="yesNoOptionsNurseHighRisk" />
+        </div>
+      </div>
+
+      <div>
         <div class="border-t border-dashed border-gray-400 my-6"></div>
 
         <!-- Body Measurements Header -->
@@ -140,7 +224,7 @@
         </div>
 
         <!-- BMI input -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div v-if="userRole.userRole === 'dokter'" :key="userRole.userRole" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           <FormInput id="tinggi" label="Tingi Badan (cm)" type="number" :modelValue="form.tinggi"
             @update:modelValue="val => form.tinggi = val" />
           <FormInput id="berat" label="Berat Badan (kg)" type="number" :modelValue="form.berat"
@@ -149,8 +233,9 @@
 
       </div>
 
-      <div v-if="role === 'dokter'" :key="role">
+      <div v-if="userRole.userRole === 'dokter'" :key="userRole.userRole">
         <div class="border-t border-dashed border-gray-400 my-6"></div>
+
         <!-- USG UtPi -->
         <h2 class="text-lg font-semibold mb-8">UtPi USG</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -178,7 +263,8 @@
       </div>
 
       <!-- Submit Button -->
-      <button @click="submitForm" :disabled="!role"  class="w-full bg-green-700 text-white py-2 px-4 rounded hover:bg-green-700">
+      <button @click="submitForm" :disabled="!userRole"
+        class="w-full bg-green-700 text-white py-2 px-4 rounded hover:bg-green-700">
         Kirim
       </button>
     </div>
@@ -190,11 +276,13 @@ import { ref } from 'vue'
 import FormInput from '../components/FormInput.vue'
 import FormSelect from '../components/FormSelect.vue'
 import { validateForm } from '../utils/validation'
-import { submitFormData } from '../services/api'
+import { submitFormDataDoctor, submitFormDataNurse } from '../services/api'
 
-const role = ref('') // initial: nothing selected
+const userRole = ref({
+  userRole: ''
+}) // initial: nothing selected
 
-const roleOptions = [
+const userRoleOptions = [
   { text: 'Dokter', value: 'dokter' },
   { text: 'Bidan', value: 'bidan' }
 ]
@@ -204,7 +292,8 @@ const form = ref({
   email: '',
   noHp: '',
   namaFaskes: '',
-  role: '',
+
+  // Doctor Section questionaire
   hpht: '',
   hpl: '',
   kehamilanPertama: '',
@@ -227,16 +316,47 @@ const form = ref({
   tinggi: '',
   utpiKanan: '',
   utpiKiri: '',
+  utpi: '',
   vel1: '',
   vel2: '',
   oph: '',
-  plgf: ''
+  plgf: '',
+
+  // Nurse Section questionaire
+  multiparaPasanganBaru: '',              
+  teknologiReproduksi: '',               
+  usiaLebih35: '',                       
+  nulipara: '',                           
+  jarakKehamilanLebih10: '',              
+  riwayatPeKeluarga: '',                  
+  obesitasSebelumHamil: '',               
+  riwayatPeSebelumnya: '',                
+  kehamilanMultipel: '',                  
+  diabetesKehamilan: '',                  
+  hipertensiKronik: '',                   
+  penyakitGinjal: '',                    
+  autoimunSLE: '',                        
+  antiphospholipidSyndrome: '',           
+  meanArterialPressure: '',               
+  proteinuria: ''         
 })
 
 const yesNoOptions = [
   { text: 'Ya', value: '1' },
   { text: 'Tidak', value: '0' }
 ]
+
+const yesNoOptionsNurseLowRisk = [
+  { text: 'Ya', value: '1' },
+  { text: 'Tidak', value: '0' }
+]
+
+
+const yesNoOptionsNurseHighRisk = [
+  { text: 'Ya', value: '2' },
+  { text: 'Tidak', value: '0' }
+]
+
 
 const kehamilanPertamaOptions = [
   { text: 'Ya', value: '0' },
@@ -255,54 +375,110 @@ const interval = [
 
 const bmiData = form.value.berat / (form.value.tinggi / 100) ** 2
 
+const oph = Number(form.value.vel2) / Number(form.value.vel1)
+
+const utpiFinal = (Number(form.value.utpiKanan) + Number(form.value.utpiKiri)) / 2
+
 const submitForm = async () => {
 
   const data = { ...form.value }
 
-  const { valid, message } = validateForm(data)
+  const { valid, message } = validateForm(data, userRole.value.userRole)
   if (!valid) return alert(message)
 
-  const submittedForm = ref({
-    nama: form.value.nama,
-    email: form.value.email,
-    noHp: form.value.noHp,
-    namaFaskes: form.value.namaFaskes,
-    hpht: form.value.hpht,
-    hpl: form.value.hpl,
-    kehamilanPertama: form.value.kehamilanPertama,
-    tglLahir: form.value.tglLahir,
-    itervalKehamilan: form.value.itervalKehamilan,
-    conceptionMethod: form.value.conceptionMethod,
-    riwayatHamilPe: form.value.riwayatHamilPe,
-    riwayatdiabetesMelitus: form.value.riwayatdiabetesMelitus,
-    riwayatHipertensiKronik: form.value.riwayatHipertensiKronik,
-    riwayatIbuSaudaraPerempuanPe: form.value.riwayatIbuSaudaraPerempuanPe,
-    systoleKiri1: form.value.systoleKiri1,
-    diastoleKiri1: form.value.diastoleKiri1,
-    systoleKanan1: form.value.systoleKanan1,
-    diastoleKanan1: form.value.diastoleKanan1,
-    systoleKiri2: form.value.systoleKiri2,
-    diastoleKiri2: form.value.diastoleKiri2,
-    systoleKanan2: form.value.systoleKanan2,
-    diastoleKanan2: form.value.diastoleKanan2,
-    bmi: bmiData,
-    utpiKanan: form.value.utpiKanan,
-    utpiKiri: form.value.utpiKiri,
-    vel1: form.value.vel1,
-    vel2: form.value.vel2,
-    plgf: form.value.plgf
-  })
+  var submittedFormDokter = null
+  var submittedFormNurse = null
 
-  const payload = { ...submittedForm.value }
+  var payloadDokter = null
+  var payloadNurse = null
+
+  if (userRole.value.userRole == 'dokter') {
+    submittedFormDokter = ref({
+      nama: form.value.nama,
+      email: form.value.email,
+      noHp: form.value.noHp,
+      namaFaskes: form.value.namaFaskes,
+      hpht: form.value.hpht,
+      hpl: form.value.hpl,
+      kehamilanPertama: form.value.kehamilanPertama,
+      tglLahir: form.value.tglLahir,
+      itervalKehamilan: form.value.itervalKehamilan,
+      conceptionMethod: form.value.conceptionMethod,
+      riwayatHamilPe: form.value.riwayatHamilPe,
+      riwayatdiabetesMelitus: form.value.riwayatdiabetesMelitus,
+      riwayatHipertensiKronik: form.value.riwayatHipertensiKronik,
+      riwayatIbuSaudaraPerempuanPe: form.value.riwayatIbuSaudaraPerempuanPe,
+      systoleKiri1: form.value.systoleKiri1,
+      diastoleKiri1: form.value.diastoleKiri1,
+      systoleKanan1: form.value.systoleKanan1,
+      diastoleKanan1: form.value.diastoleKanan1,
+      systoleKiri2: form.value.systoleKiri2,
+      diastoleKiri2: form.value.diastoleKiri2,
+      systoleKanan2: form.value.systoleKanan2,
+      diastoleKanan2: form.value.diastoleKanan2,
+      bmi: String(bmiData),
+      utpi: String(utpiFinal),
+      oph: String(oph),
+      plgf: form.value.plgf
+    })
+
+    payloadDokter = { ...submittedFormDokter.value }
+
+  } else {
+    submittedFormNurse = ref({
+      nama: form.value.nama,
+      email: form.value.email,
+      noHp: form.value.noHp,
+      namaFaskes: form.value.namaFaskes,
+      multiparaPasanganBaru: form.value.multiparaPasanganBaru,
+      teknologiReproduksi: form.value.teknologiReproduksi,
+      usiaLebih35: form.value.usiaLebih35,
+      nulipara: form.value.nulipara,
+      jarakKehamilanLebih10: form.value.jarakKehamilanLebih10,
+      riwayatPeKeluarga: form.value.riwayatPeKeluarga,
+      obesitasSebelumHamil: form.value.obesitasSebelumHamil,
+      riwayatPeSebelumnya: form.value.riwayatPeSebelumnya,
+      kehamilanMultipel: form.value.kehamilanMultipel,
+      diabetesKehamilan: form.value.diabetesKehamilan,
+      hipertensiKronik: form.value.hipertensiKronik,
+      penyakitGinjal: form.value.penyakitGinjal,
+      autoimunSLE: form.value.autoimunSLE,
+      antiphospholipidSyndrome: form.value.antiphospholipidSyndrome,
+      meanArterialPressure: form.value.meanArterialPressure,
+      proteinuria: form.value.proteinuria,
+      systoleKiri1: form.value.systoleKiri1,
+      diastoleKiri1: form.value.diastoleKiri1,
+      systoleKanan1: form.value.systoleKanan1,
+      diastoleKanan1: form.value.diastoleKanan1,
+      systoleKiri2: form.value.systoleKiri2,
+      diastoleKiri2: form.value.diastoleKiri2,
+      systoleKanan2: form.value.systoleKanan2,
+      diastoleKanan2: form.value.diastoleKanan2,
+    })
+
+    payloadNurse = { ...submittedFormNurse.value }
+
+  }
 
   // Transform interval kehamilan rule
   // const interval = Number(payload.itervalKehamilan)
   // payload.itervalKehamilan = (interval >= 1 && interval <= 9) ? '1' : '0'
 
   try {
-    // const response = await submitFormData(payload)
-    alert('Form berhasil dikirim!')
-    // console.log('Response:', response)
+
+    console.log('Role: ', userRole.value.userRole)
+
+    if (userRole.value.userRole == 'dokter') {
+      response = await submitFormDataDoctor(payloadDokter)
+      alert('Form berhasil dikirim!')
+      console.log('Response:', response)
+    } else if (userRole.value.userRole == 'bidan') {
+      response = await submitFormDataNurse(payloadNurse)
+      alert('Form berhasil dikirim!')
+      console.log('Response:', response)
+    } else {
+      alert('Form gagal dikirim!')
+    }
   } catch (err) {
     console.error('Submit error:', err)
     alert('Terjadi kesalahan saat mengirim data.')
