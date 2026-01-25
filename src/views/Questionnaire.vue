@@ -13,8 +13,10 @@
         <FormInput id="nama" label="Nama" :modelValue="form.nama" @update:modelValue="val => form.nama = val" />
         <FormInput id="email" label="Email" :modelValue="form.email" @update:modelValue="val => form.email = val" />
         <FormInput id="noHp" label="No HP" :modelValue="form.noHp" @update:modelValue="val => form.noHp = val" />
-        <FormInput id="namaFaskes" label="Nama Faskes" :modelValue="form.namaFaskes"
-          @update:modelValue="val => form.namaFaskes = val" />
+        <FormInput id="namaFaskes" label="Nama Faskes" :modelValue="form.namaFaskes" @update:modelValue="val => form.namaFaskes = val" />
+        <FormInput id="namaNakes" label="Nama Nakes" :modelValue="form.namaNakes" @update:modelValue="val => form.namaNakes = val" />
+        <FormInput id="noHpNakes" label="No HP Nakes" :modelValue="form.noHpNakes" @update:modelValue="val => form.noHpNakes = val" />
+        <FormInput id="emailNakes" label="Email Nakes" :modelValue="form.emailNakes" @update:modelValue="val => form.emailNakes = val" />
       </div>
 
       <!-- userRole Selector -->
@@ -288,10 +290,25 @@ const userRoleOptions = [
 ]
 
 const form = ref({
+
+  // Genaral Info
   nama: '',
   email: '',
   noHp: '',
   namaFaskes: '',
+  namaNakes: '',
+  noHpNakes: '',
+  emailNakes: '',
+
+  // General Pengukuran Tubuh
+  systoleKiri1: '',
+  diastoleKiri1: '',
+  systoleKanan1: '',
+  diastoleKanan1: '',
+  systoleKiri2: '',
+  diastoleKiri2: '',
+  systoleKanan2: '',
+  diastoleKanan2: '',
 
   // Doctor Section questionaire
   hpht: '',
@@ -304,14 +321,6 @@ const form = ref({
   riwayatdiabetesMelitus: '',
   riwayatHipertensiKronik: '',
   riwayatIbuSaudaraPerempuanPe: '',
-  systoleKiri1: '',
-  diastoleKiri1: '',
-  systoleKanan1: '',
-  diastoleKanan1: '',
-  systoleKiri2: '',
-  diastoleKiri2: '',
-  systoleKanan2: '',
-  diastoleKanan2: '',
   berat: '',
   tinggi: '',
   utpiKanan: '',
@@ -398,6 +407,9 @@ const submitForm = async () => {
       email: form.value.email,
       noHp: form.value.noHp,
       namaFaskes: form.value.namaFaskes,
+      namaNakes: form.value.namaNakes,
+      noHpNakes: form.value.noHpNakes,
+      emailNakes: form.value.emailNakes,
       hpht: form.value.hpht,
       hpl: form.value.hpl,
       kehamilanPertama: form.value.kehamilanPertama,
@@ -430,6 +442,9 @@ const submitForm = async () => {
       email: form.value.email,
       noHp: form.value.noHp,
       namaFaskes: form.value.namaFaskes,
+      namaNakes: form.value.namaNakes,
+      noHpNakes: form.value.noHpNakes,
+      emailNakes: form.value.emailNakes,
       multiparaPasanganBaru: form.value.multiparaPasanganBaru,
       teknologiReproduksi: form.value.teknologiReproduksi,
       usiaLebih35: form.value.usiaLebih35,

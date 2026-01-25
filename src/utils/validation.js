@@ -43,6 +43,9 @@ export const validateForm = (form, userRole) => {
       'email', 
       'noHp', 
       'namaFaskes', 
+      'namaNakes',
+      'noHpNakes',
+      'emailNakes',
       'tglLahir',
       'kehamilanPertama', 
       'itervalKehamilan', 
@@ -71,7 +74,10 @@ export const validateForm = (form, userRole) => {
       'Nama', 
       'Email', 
       'No HP', 
-      'Nama Faskes', 
+      'Nama Faskes',
+      'Nama Nakes',
+      'No HP Nakes',
+      'Email Nakes',
       'Tanggal Lahir',
       'Kehamilan Pertama', 
       'Interval Kehamilan', 
@@ -98,6 +104,13 @@ export const validateForm = (form, userRole) => {
   } else {
     // Required fields (except plgf)
     requiredFields = [
+      'nama', 
+      'email', 
+      'noHp', 
+      'namaFaskes', 
+      'namaNakes',
+      'noHpNakes',
+      'emailNakes',
       'multiparaPasanganBaru',
       'teknologiReproduksi',
       'usiaLebih35',
@@ -124,6 +137,13 @@ export const validateForm = (form, userRole) => {
     ]
 
     fieldLabels = [
+      'Nama', 
+      'Email', 
+      'No HP', 
+      'Nama Faskes',
+      'Nama Nakes',
+      'No HP Nakes',
+      'Email Nakes',
       'Multipara dengan Pasangan Baru',
       'Kehamilan dengan Teknologi Reproduksi Berbantu',
       'Usia Ibu ≥ 35 Tahun',
