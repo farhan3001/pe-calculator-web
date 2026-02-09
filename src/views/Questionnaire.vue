@@ -241,10 +241,8 @@
         <!-- USG UtPi -->
         <h2 class="text-lg font-semibold mb-8">UtPi USG</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormInput id="utpiKiri" label="UtPi Kiri" :modelValue="form.utpiKiri"
-            @update:modelValue="val => form.utpiKiri = val" />
-          <FormInput id="utpiKanan" label="UtPi Kanan" :modelValue="form.utpiKanan"
-            @update:modelValue="val => form.utpiKanan = val" />
+          <FormInput id="utpiKiri" label="UtPi Kiri" :modelValue="form.utpiKiri" @update:modelValue="val => form.utpiKiri = val" />
+          <FormInput id="utpiKanan" label="UtPi Kanan" :modelValue="form.utpiKanan" @update:modelValue="val => form.utpiKanan = val" />
         </div>
 
         <div class="border-t border-dashed border-gray-400 my-6"></div>
@@ -274,7 +272,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import FormInput from '../components/FormInput.vue'
 import FormSelect from '../components/FormSelect.vue'
 import { validateForm } from '../utils/validation'
@@ -325,7 +323,6 @@ const form = ref({
   tinggi: '',
   utpiKanan: '',
   utpiKiri: '',
-  utpi: '',
   vel1: '',
   vel2: '',
   oph: '',
@@ -382,11 +379,32 @@ const interval = [
   { text: '< 10 Tahun', value: '1' }
 ]
 
-const bmiData = form.value.berat / (form.value.tinggi / 100) ** 2
+const bmiData = computed(() => {
+  const berat = Number(form.value.berat)
+  const tinggi = Number(form.value.tinggi) / 100
 
-const oph = Number(form.value.vel2) / Number(form.value.vel1)
+  if (!berat || !tinggi) return null
 
-const utpiFinal = (Number(form.value.utpiKanan) + Number(form.value.utpiKiri)) / 2
+  return Number((berat / (tinggi ** 2)).toFixed(2))
+})
+
+const ophFinal = computed(() => {
+  const vel1 = Number(form.value.vel1)
+  const vel2 =  Number(form.value.vel2)
+
+  if (!vel1 || !vel2) return null
+
+  return (Number(vel2) / Number(vel1)).toFixed(2)
+})
+
+const utpiFinal = computed(() => {
+  const utpiKanan = Number(form.value.utpiKanan)
+  const utpiKiri = Number(form.value.utpiKiri)
+
+  if (!utpiKiri || !utpiKanan) return null
+
+  return ((utpiKanan + utpiKiri) / 2).toFixed(2)
+})
 
 const submitForm = async () => {
 
@@ -395,14 +413,11 @@ const submitForm = async () => {
   const { valid, message } = validateForm(data, userRole.value.userRole)
   if (!valid) return alert(message)
 
-  var submittedFormDokter = null
-  var submittedFormNurse = null
-
   var payloadDokter = null
   var payloadNurse = null
 
   if (userRole.value.userRole == 'dokter') {
-    submittedFormDokter = ref({
+    const submittedFormDokter = ref({
       nama: form.value.nama,
       email: form.value.email,
       noHp: form.value.noHp,
@@ -420,24 +435,28 @@ const submitForm = async () => {
       riwayatdiabetesMelitus: form.value.riwayatdiabetesMelitus,
       riwayatHipertensiKronik: form.value.riwayatHipertensiKronik,
       riwayatIbuSaudaraPerempuanPe: form.value.riwayatIbuSaudaraPerempuanPe,
-      systoleKiri1: form.value.systoleKiri1,
-      diastoleKiri1: form.value.diastoleKiri1,
-      systoleKanan1: form.value.systoleKanan1,
-      diastoleKanan1: form.value.diastoleKanan1,
-      systoleKiri2: form.value.systoleKiri2,
-      diastoleKiri2: form.value.diastoleKiri2,
-      systoleKanan2: form.value.systoleKanan2,
-      diastoleKanan2: form.value.diastoleKanan2,
-      bmi: String(bmiData),
-      utpi: String(utpiFinal),
-      oph: String(oph),
-      plgf: form.value.plgf
+      systoleKiri1: String(form.value.systoleKiri1),
+      diastoleKiri1: String(form.value.diastoleKiri1),
+      systoleKanan1: String(form.value.systoleKanan1),
+      diastoleKanan1: String(form.value.diastoleKanan1),
+      systoleKiri2: String(form.value.systoleKiri2),
+      diastoleKiri2: String(form.value.diastoleKiri2),
+      systoleKanan2: String(form.value.systoleKanan2),
+      diastoleKanan2: String(form.value.diastoleKanan2),
+      bmi: String(bmiData.value),
+      utpi: String(utpiFinal.value),
+      oph: String(ophFinal.value),
+      plgf: String(form.value.plgf)
     })
+
+    console.log('BMI Data: ', String(bmiData.value))
+    console.log('UTPI: ', String(utpiFinal.value))
+    console.log('OPH: ', String(ophFinal.value))
 
     payloadDokter = { ...submittedFormDokter.value }
 
   } else {
-    submittedFormNurse = ref({
+    const submittedFormNurse = ref({
       nama: form.value.nama,
       email: form.value.email,
       noHp: form.value.noHp,
@@ -461,14 +480,14 @@ const submitForm = async () => {
       antiphospholipidSyndrome: form.value.antiphospholipidSyndrome,
       meanArterialPressure: form.value.meanArterialPressure,
       proteinuria: form.value.proteinuria,
-      systoleKiri1: form.value.systoleKiri1,
-      diastoleKiri1: form.value.diastoleKiri1,
-      systoleKanan1: form.value.systoleKanan1,
-      diastoleKanan1: form.value.diastoleKanan1,
-      systoleKiri2: form.value.systoleKiri2,
-      diastoleKiri2: form.value.diastoleKiri2,
-      systoleKanan2: form.value.systoleKanan2,
-      diastoleKanan2: form.value.diastoleKanan2,
+      systoleKiri1: String(form.value.systoleKiri1),
+      diastoleKiri1: String(form.value.diastoleKiri1),
+      systoleKanan1: String(form.value.systoleKanan1),
+      diastoleKanan1: String(form.value.diastoleKanan1),
+      systoleKiri2: String(form.value.systoleKiri2),
+      diastoleKiri2: String(form.value.diastoleKiri2),
+      systoleKanan2: String(form.value.systoleKanan2),
+      diastoleKanan2: String(form.value.diastoleKanan2),
     })
 
     payloadNurse = { ...submittedFormNurse.value }
