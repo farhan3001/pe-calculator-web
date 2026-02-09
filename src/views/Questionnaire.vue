@@ -503,11 +503,11 @@ const submitForm = async () => {
     console.log('Role: ', userRole.value.userRole)
 
     if (userRole.value.userRole == 'dokter') {
-      response = await submitFormDataDoctor(payloadDokter)
+      const response = await submitFormDataDoctor(payloadDokter)
       alert('Form berhasil dikirim!')
       console.log('Response:', response)
     } else if (userRole.value.userRole == 'bidan') {
-      response = await submitFormDataNurse(payloadNurse)
+      const response = await submitFormDataNurse(payloadNurse)
       alert('Form berhasil dikirim!')
       console.log('Response:', response)
     } else {
