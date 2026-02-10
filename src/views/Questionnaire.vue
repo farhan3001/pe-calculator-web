@@ -359,8 +359,9 @@ const autofillFormForTesting = () => {
     }
   })
 
+  // Uncomment this for auto-fill testing
   // force role to dokter
-  userRole.value.userRole = 'dokter'
+  // userRole.value.userRole = 'dokter'
 }
 
 onMounted(() => {
