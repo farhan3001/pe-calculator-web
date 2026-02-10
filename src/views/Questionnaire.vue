@@ -515,16 +515,16 @@ const riskStatus = computed(() => {
   // Rule 1
   if (usia < 34) {
     return {
-      level: result < 49 ? 'high' : 'low',
-      isHighRisk: result < 49
+      level: result <= 49 ? 'high' : 'low',
+      isHighRisk: result <= 49
     }
   }
 
   // Rule 2
   if (usia >= 34 && usia < 37) {
     return {
-      level: result < 13 ? 'high' : 'low',
-      isHighRisk: result < 13
+      level: result <= 13 ? 'high' : 'low',
+      isHighRisk: result <= 13
     }
   }
 
