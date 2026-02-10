@@ -490,12 +490,10 @@ const yesNoOptionsNurseLowRisk = [
   { text: 'Tidak', value: '0' }
 ]
 
-
 const yesNoOptionsNurseHighRisk = [
   { text: 'Ya', value: '2' },
   { text: 'Tidak', value: '0' }
 ]
-
 
 const kehamilanPertamaOptions = [
   { text: 'Ya', value: '1' },
