@@ -5,6 +5,7 @@ const apiKey = process.env.VUE_APP_API_KEY
 
 const urlPostPeDoctor = process.env.VUE_APP_URL_POST_PE_DOCTOR
 const urlPostPeNurse = process.env.VUE_APP_URL_POST_PE_NURSE
+const urlGetDataPEPatientByEmail = process.env.VUE_APP_URL_GET_PE_LATEST
 
 
 export const submitFormDataDoctor = (data) => {
@@ -27,3 +28,14 @@ export const submitFormDataNurse = (data) => {
   })
 }
 
+export const getLatestPeCalculatorByEmail = (email) => {
+  return axios.get(
+    `${baseUrl}${urlGetDataPEPatientByEmail}/${encodeURIComponent(email)}`,
+    {
+      headers: {
+        'x-api-key': apiKey,
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+}

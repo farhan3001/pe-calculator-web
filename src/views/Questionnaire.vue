@@ -246,6 +246,7 @@
         </div>
 
         <div class="border-t border-dashed border-gray-400 my-6"></div>
+        
         <!-- USG OPH -->
         <h2 class="text-lg font-semibold mb-8">Ophtalmica USG</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -262,6 +263,41 @@
         </div>
       </div>
 
+      <!-- Result -->
+      <div v-if="peResult.result !== null" class="mb-8">
+        <h2 class="text-lg font-semibold mb-2">Hasil Perhitungan</h2>
+
+        <div
+          class="p-4 rounded-lg text-center border"
+          :class="riskStatus.isHighRisk
+            ? 'bg-red-50 border-red-200'
+            : 'bg-green-50 border-green-200'"
+        >
+          <p class="text-sm text-gray-600 mb-1">
+            Nilai Risiko Pre-Eklampsia
+          </p>
+
+          <p
+            class="text-3xl font-bold"
+            :class="riskStatus.isHighRisk
+              ? 'text-red-700'
+              : 'text-green-700'"
+          >
+            {{ Number(peResult.result).toFixed(2) }}
+          </p>
+
+          <p
+            class="mt-2 text-sm font-semibold"
+            :class="riskStatus.isHighRisk
+              ? 'text-red-600'
+              : 'text-green-600'"
+          >
+             {{ riskStatus.isHighRisk ? 'RISIKO TINGGI' : 'RISIKO RENDAH' }}
+          </p>
+        </div>
+      </div>
+
+
       <!-- Submit Button -->
       <button @click="submitForm" :disabled="!userRole"
         class="w-full bg-green-700 text-white py-2 px-4 rounded hover:bg-green-700">
@@ -273,10 +309,63 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { onMounted } from 'vue'
 import FormInput from '../components/FormInput.vue'
 import FormSelect from '../components/FormSelect.vue'
 import { validateForm } from '../utils/validation'
-import { submitFormDataDoctor, submitFormDataNurse } from '../services/api'
+import { submitFormDataDoctor, submitFormDataNurse, getLatestPeCalculatorByEmail } from '../services/api'
+
+const mockApiPayload = {
+
+  // Uncomment for testing using auto-fill
+
+  // nama: 'Azzahra Nurintiara',
+  // email: 'farhansimatupang@gmail.com',
+  // noHp: '081385075398',
+  // namaFaskes: 'IPI',
+  // namaNakes: 'Vania',
+  // noHpNakes: '081165890712',
+  // emailNakes: 'dummy.nakes@gmail.com',
+  // hpht: '2026-01-01',
+  // hpl: '',
+  // kehamilanPertama: '0',
+  // tglLahir: '2002-05-10',
+  // itervalKehamilan: '0',
+  // conceptionMethod: '0',
+  // riwayatHamilPe: '0',
+  // riwayatdiabetesMelitus: '0',
+  // riwayatHipertensiKronik: '0',
+  // riwayatIbuSaudaraPerempuanPe: '0',
+  // systoleKiri1: '110',
+  // diastoleKiri1: '90',
+  // systoleKanan1: '110',
+  // diastoleKanan1: '90',
+  // systoleKiri2: '110',
+  // diastoleKiri2: '90',
+  // systoleKanan2: '110',
+  // diastoleKanan2: '90',
+  // tinggi: '153',
+  // berat: '53',
+  // utpiKanan: '1.38',
+  // utpiKiri: '1.28',
+  // vel1: '40.4',
+  // vel2: '10.3',
+}
+
+const autofillFormForTesting = () => {
+  Object.keys(form.value).forEach((key) => {
+    if (mockApiPayload[key] !== undefined) {
+      form.value[key] = mockApiPayload[key]
+    }
+  })
+
+  // force role to dokter
+  userRole.value.userRole = 'dokter'
+}
+
+onMounted(() => {
+  autofillFormForTesting()
+})
 
 const userRole = ref({
   userRole: ''
@@ -406,6 +495,45 @@ const utpiFinal = computed(() => {
   return ((utpiKanan + utpiKiri) / 2).toFixed(2)
 })
 
+const peResult = ref({
+  result: null,
+  usiaKehamilan: null
+})
+
+const riskStatus = computed(() => {
+  const result = Number(peResult.value.result)
+  const usia = Number(peResult.value.usiaKehamilan)
+
+  if (!result || !usia) {
+    return {
+      level: null,
+      isHighRisk: false
+    }
+  }
+
+  // Rule 1
+  if (usia < 34) {
+    return {
+      level: result < 49 ? 'high' : 'low',
+      isHighRisk: result < 49
+    }
+  }
+
+  // Rule 2
+  if (usia >= 34 && usia < 37) {
+    return {
+      level: result < 13 ? 'high' : 'low',
+      isHighRisk: result < 13
+    }
+  }
+
+  // Default (≥ 37 weeks → treat as low risk unless specified later)
+  return {
+    level: 'low',
+    isHighRisk: false
+  }
+})
+
 const submitForm = async () => {
 
   const data = { ...form.value }
@@ -506,10 +634,27 @@ const submitForm = async () => {
       const response = await submitFormDataDoctor(payloadDokter)
       alert('Form berhasil dikirim!')
       console.log('Response:', response)
+
+      const latestResultRes = await getLatestPeCalculatorByEmail(form.value.email)
+
+      peResult.value.result = latestResultRes?.data?.data?.result ?? null
+      peResult.value.usiaKehamilan = latestResultRes?.data?.data?.usiaKehamilan ?? null
+
+      // console.log('PE Result:', peResult.value)
+
+      // alert(`Hasil Risiko Pre-Eklampsia: ${peResult.value}`)
+
+
     } else if (userRole.value.userRole == 'bidan') {
       const response = await submitFormDataNurse(payloadNurse)
       alert('Form berhasil dikirim!')
       console.log('Response:', response)
+
+      const latestResultRes = await getLatestPeCalculatorByEmail(form.value.email)
+
+      peResult.value.result = latestResultRes?.data?.data?.result ?? null
+      peResult.value.usiaKehamilan = latestResultRes?.data?.data?.usiaKehamilan ?? null
+
     } else {
       alert('Form gagal dikirim!')
     }
