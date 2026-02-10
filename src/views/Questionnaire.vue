@@ -315,57 +315,100 @@ import FormSelect from '../components/FormSelect.vue'
 import { validateForm } from '../utils/validation'
 import { submitFormDataDoctor, submitFormDataNurse, getLatestPeCalculatorByEmail } from '../services/api'
 
-const mockApiPayload = {
+const mockApiPayloads = [
+  // ===== 1. ORIGINAL (baseline) =====
+  {
+    nama: 'Azzahra Nurintiara',
+    email: 'farhansimatupang@gmail.com',
+    noHp: '081385075398',
+    namaFaskes: 'IPI',
+    namaNakes: 'Vania',
+    noHpNakes: '081165890712',
+    emailNakes: 'dummy.nakes@gmail.com',
+    hpht: '2026-01-01',
+    hpl: '',
+    kehamilanPertama: '0',
+    tglLahir: '2002-05-10',
+    itervalKehamilan: '0',
+    conceptionMethod: '0',
+    riwayatHamilPe: '0',
+    riwayatdiabetesMelitus: '0',
+    riwayatHipertensiKronik: '0',
+    riwayatIbuSaudaraPerempuanPe: '0',
+    systoleKiri1: '110',
+    diastoleKiri1: '90',
+    systoleKanan1: '110',
+    diastoleKanan1: '90',
+    systoleKiri2: '110',
+    diastoleKiri2: '90',
+    systoleKanan2: '110',
+    diastoleKanan2: '90',
+    tinggi: '153',
+    berat: '53',
+    utpiKanan: '1.38',
+    utpiKiri: '1.28',
+    vel1: '40.4',
+    vel2: '10.3',
+  },
 
-  // Uncomment for testing using auto-fill
+  // ===== 2–30. GENERATED VARIANTS =====
+  ...Array.from({ length: 29 }, (_, i) => {
+    const idx = i + 2
+    return {
+      nama: `Test Pasien ${idx}`,
+      email: `test${idx}@example.com`,
+      noHp: `081300000${100 + idx}`,
+      namaFaskes: idx % 2 === 0 ? 'RS Ibu & Anak' : 'Puskesmas',
+      namaNakes: idx % 2 === 0 ? 'Dr. Sari' : 'Bidan Lina',
+      noHpNakes: `081200000${200 + idx}`,
+      emailNakes: `nakes${idx}@example.com`,
+      hpht: '2026-01-01',
+      hpl: '',
+      kehamilanPertama: idx % 2 === 0 ? '1' : '0',
+      tglLahir: `19${90 + (idx % 10)}-0${(idx % 9) + 1}-15`,
+      itervalKehamilan: idx % 3 === 0 ? '1' : '0',
+      conceptionMethod: idx % 4 === 0 ? '1' : '0',
+      riwayatHamilPe: idx % 5 === 0 ? '1' : '0',
+      riwayatdiabetesMelitus: idx % 6 === 0 ? '1' : '0',
+      riwayatHipertensiKronik: idx % 7 === 0 ? '1' : '0',
+      riwayatIbuSaudaraPerempuanPe: idx % 8 === 0 ? '1' : '0',
+      systoleKiri1: String(105 + (idx % 30)),
+      diastoleKiri1: String(70 + (idx % 20)),
+      systoleKanan1: String(108 + (idx % 30)),
+      diastoleKanan1: String(72 + (idx % 20)),
+      systoleKiri2: String(107 + (idx % 30)),
+      diastoleKiri2: String(75 + (idx % 20)),
+      systoleKanan2: String(109 + (idx % 30)),
+      diastoleKanan2: String(77 + (idx % 20)),
+      tinggi: String(145 + (idx % 20)),
+      berat: String(45 + (idx % 25)),
+      utpiKanan: (1.1 + (idx % 5) * 0.15).toFixed(2),
+      utpiKiri: (1.0 + (idx % 5) * 0.14).toFixed(2),
+      vel1: (35 + (idx % 10) * 1.5).toFixed(1),
+      vel2: (8 + (idx % 6) * 1.1).toFixed(1),
+    }
+  })
+]
 
-  // nama: 'Azzahra Nurintiara',
-  // email: 'farhansimatupang@gmail.com',
-  // noHp: '081385075398',
-  // namaFaskes: 'IPI',
-  // namaNakes: 'Vania',
-  // noHpNakes: '081165890712',
-  // emailNakes: 'dummy.nakes@gmail.com',
-  // hpht: '2026-01-01',
-  // hpl: '',
-  // kehamilanPertama: '0',
-  // tglLahir: '2002-05-10',
-  // itervalKehamilan: '0',
-  // conceptionMethod: '0',
-  // riwayatHamilPe: '0',
-  // riwayatdiabetesMelitus: '0',
-  // riwayatHipertensiKronik: '0',
-  // riwayatIbuSaudaraPerempuanPe: '0',
-  // systoleKiri1: '110',
-  // diastoleKiri1: '90',
-  // systoleKanan1: '110',
-  // diastoleKanan1: '90',
-  // systoleKiri2: '110',
-  // diastoleKiri2: '90',
-  // systoleKanan2: '110',
-  // diastoleKanan2: '90',
-  // tinggi: '153',
-  // berat: '53',
-  // utpiKanan: '1.38',
-  // utpiKiri: '1.28',
-  // vel1: '40.4',
-  // vel2: '10.3',
-}
 
-const autofillFormForTesting = () => {
+let index = ref(0)
+
+const autofillNextPayload = () => {
+  const payload = mockApiPayloads[index.value % mockApiPayloads.length]
+
   Object.keys(form.value).forEach((key) => {
-    if (mockApiPayload[key] !== undefined) {
-      form.value[key] = mockApiPayload[key]
+    if (payload[key] !== undefined) {
+      form.value[key] = payload[key]
     }
   })
 
-  // Uncomment this for auto-fill testing
-  // force role to dokter
-  // userRole.value.userRole = 'dokter'
+  // index odd → dokter, even → bidan
+  // userRole.value.userRole = index % 2 === 1 ? 'dokter' : 'bidan'
+  userRole.value.userRole = 'dokter'
 }
 
 onMounted(() => {
-  autofillFormForTesting()
+  autofillNextPayload()
 })
 
 const userRole = ref({
@@ -465,8 +508,8 @@ const conceptionOptions = [
 ]
 
 const interval = [
-  { text: '> 10 Tahun/Anak Pertama', value: '0' },
-  { text: '< 10 Tahun', value: '1' }
+  { text: '< 10 Tahun/Anak Pertama', value: '1' },
+  { text: '> 10 Tahun', value: '0' }
 ]
 
 const bmiData = computed(() => {
@@ -644,6 +687,9 @@ const submitForm = async () => {
       // console.log('PE Result:', peResult.value)
 
       // alert(`Hasil Risiko Pre-Eklampsia: ${peResult.value}`)
+
+      index.value++
+      autofillNextPayload()
 
 
     } else if (userRole.value.userRole == 'bidan') {
