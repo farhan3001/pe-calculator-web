@@ -498,8 +498,8 @@ const yesNoOptionsNurseHighRisk = [
 
 
 const kehamilanPertamaOptions = [
-  { text: 'Ya', value: '0' },
-  { text: 'Tidak', value: '1' }
+  { text: 'Ya', value: '1' },
+  { text: 'Tidak', value: '0' }
 ]
 
 const conceptionOptions = [
