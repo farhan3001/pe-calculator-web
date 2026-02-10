@@ -676,7 +676,6 @@ const submitForm = async () => {
 
     if (userRole.value.userRole == 'dokter') {
       const response = await submitFormDataDoctor(payloadDokter)
-      alert('Form berhasil dikirim!')
       console.log('Response:', response)
 
       const latestResultRes = await getLatestPeCalculatorByEmail(form.value.email)
@@ -687,6 +686,8 @@ const submitForm = async () => {
       // console.log('PE Result:', peResult.value)
 
       // alert(`Hasil Risiko Pre-Eklampsia: ${peResult.value}`)
+
+      alert('Form berhasil dikirim!')
 
       index.value++
       autofillNextPayload()
