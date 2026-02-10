@@ -508,8 +508,8 @@ const conceptionOptions = [
 ]
 
 const interval = [
-  { text: '< 10 Tahun/Anak Pertama', value: '1' },
-  { text: '>= 10 Tahun', value: '0' }
+  { text: '> 10 Tahun/Anak Pertama', value: '1' },
+  { text: '<= 10 Tahun', value: '0' }
 ]
 
 const bmiData = computed(() => {
