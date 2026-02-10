@@ -675,9 +675,8 @@ const submitForm = async () => {
     console.log('Role: ', userRole.value.userRole)
 
     if (userRole.value.userRole == 'dokter') {
-      const response = await submitFormDataDoctor(payloadDokter)
-      console.log('Response:', response)
 
+      await submitFormDataDoctor(payloadDokter)
       const latestResultRes = await getLatestPeCalculatorByEmail(form.value.email)
 
       peResult.value.result = latestResultRes?.data?.data?.result ?? null
