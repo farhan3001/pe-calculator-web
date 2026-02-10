@@ -687,10 +687,10 @@ const submitForm = async () => {
 
       // alert(`Hasil Risiko Pre-Eklampsia: ${peResult.value}`)
 
-      alert('Form berhasil dikirim!')
-
       index.value++
       autofillNextPayload()
+
+      alert('Form berhasil dikirim!')
 
 
     } else if (userRole.value.userRole == 'bidan') {
