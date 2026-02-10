@@ -676,11 +676,10 @@ const submitForm = async () => {
 
     if (userRole.value.userRole == 'dokter') {
 
-      await submitFormDataDoctor(payloadDokter)
-      const latestResultRes = await getLatestPeCalculatorByEmail(form.value.email)
+      const response = await submitFormDataDoctor(payloadDokter)
 
-      peResult.value.result = latestResultRes?.data?.data?.result ?? null
-      peResult.value.usiaKehamilan = latestResultRes?.data?.data?.usiaKehamilan ?? null
+      peResult.value.result = response?.data?.data?.result ?? null
+      peResult.value.usiaKehamilan = response?.data?.data?.usiaKehamilan ?? null
 
       // console.log('PE Result:', peResult.value)
 
@@ -694,13 +693,14 @@ const submitForm = async () => {
 
     } else if (userRole.value.userRole == 'bidan') {
       const response = await submitFormDataNurse(payloadNurse)
+
+      peResult.value.result = response?.data?.data?.result ?? null
+      peResult.value.usiaKehamilan = response?.data?.data?.usiaKehamilan ?? null
+
+      // indexNurse.value++
+      // autofillNextPayloadNurse()
+
       alert('Form berhasil dikirim!')
-      console.log('Response:', response)
-
-      const latestResultRes = await getLatestPeCalculatorByEmail(form.value.email)
-
-      peResult.value.result = latestResultRes?.data?.data?.result ?? null
-      peResult.value.usiaKehamilan = latestResultRes?.data?.data?.usiaKehamilan ?? null
 
     } else {
       alert('Form gagal dikirim!')
