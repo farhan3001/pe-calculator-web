@@ -318,9 +318,9 @@ import { submitFormDataDoctor, submitFormDataNurse, getLatestPeCalculatorByEmail
 const mockApiPayloads = [
   // ===== 1. ORIGINAL (baseline) =====
   {
-    nama: 'Azzahra Nurintiara',
-    email: 'farhansimatupang@gmail.com',
-    noHp: '081385075398',
+    nama: 'Test Pasien 1',
+    email: 'test1@example.com',
+    noHp: '081234567890',
     namaFaskes: 'IPI',
     namaNakes: 'Vania',
     noHpNakes: '081165890712',
