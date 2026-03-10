@@ -13,16 +13,20 @@
         <FormInput id="nama" label="Nama" :modelValue="form.nama" @update:modelValue="val => form.nama = val" />
         <FormInput id="email" label="Email" :modelValue="form.email" @update:modelValue="val => form.email = val" />
         <FormInput id="noHp" label="No HP" :modelValue="form.noHp" @update:modelValue="val => form.noHp = val" />
-        <FormInput id="namaFaskes" label="Nama Faskes" :modelValue="form.namaFaskes" @update:modelValue="val => form.namaFaskes = val" />
-        <FormInput id="namaNakes" label="Nama Nakes" :modelValue="form.namaNakes" @update:modelValue="val => form.namaNakes = val" />
-        <FormInput id="noHpNakes" label="No HP Nakes" :modelValue="form.noHpNakes" @update:modelValue="val => form.noHpNakes = val" />
-        <FormInput id="emailNakes" label="Email Nakes" :modelValue="form.emailNakes" @update:modelValue="val => form.emailNakes = val" />
+        <FormInput id="namaFaskes" label="Nama Faskes" :modelValue="form.namaFaskes"
+          @update:modelValue="val => form.namaFaskes = val" />
+        <FormInput id="namaNakes" label="Nama Nakes" :modelValue="form.namaNakes"
+          @update:modelValue="val => form.namaNakes = val" />
+        <FormInput id="noHpNakes" label="No HP Nakes" :modelValue="form.noHpNakes"
+          @update:modelValue="val => form.noHpNakes = val" />
+        <FormInput id="emailNakes" label="Email Nakes" :modelValue="form.emailNakes"
+          @update:modelValue="val => form.emailNakes = val" />
       </div>
 
       <!-- userRole Selector -->
       <div class="mb-8">
-        <FormSelect id="userRole" label="Dokter atau Bidan?" :modelValue="userRole.userRole" @update:modelValue="val => userRole.userRole = val"
-          :options="userRoleOptions" />
+        <FormSelect id="userRole" label="Dokter atau Bidan?" :modelValue="userRole.userRole"
+          @update:modelValue="val => userRole.userRole = val" :options="userRoleOptions" />
       </div>
 
       <div v-if="userRole.userRole === 'dokter'" :key="userRole.userRole">
@@ -116,7 +120,7 @@
 
           <!-- Diabetes dalam Kehamilan -->
           <FormSelect id="diabetesKehamilan" label="Diabetes dalam Kehamilan" :modelValue="form.diabetesKehamilan"
-            @update:modelValue="val => form.diabetesKehamilan = val" :options="yesNoOptionsNurseHighRisk" /> 
+            @update:modelValue="val => form.diabetesKehamilan = val" :options="yesNoOptionsNurseHighRisk" />
 
           <!-- Hipertensi Kronik -->
           <FormSelect id="hipertensiKronik" label="Hipertensi Kronik" :modelValue="form.hipertensiKronik"
@@ -226,7 +230,8 @@
         </div>
 
         <!-- BMI input -->
-        <div v-if="userRole.userRole === 'dokter'" :key="userRole.userRole" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div v-if="userRole.userRole === 'dokter'" :key="userRole.userRole"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           <FormInput id="tinggi" label="Tingi Badan (cm)" type="number" :modelValue="form.tinggi"
             @update:modelValue="val => form.tinggi = val" />
           <FormInput id="berat" label="Berat Badan (kg)" type="number" :modelValue="form.berat"
@@ -241,12 +246,14 @@
         <!-- USG UtPi -->
         <h2 class="text-lg font-semibold mb-8">UtPi USG</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormInput id="utpiKiri" label="UtPi Kiri" :modelValue="form.utpiKiri" @update:modelValue="val => form.utpiKiri = val" />
-          <FormInput id="utpiKanan" label="UtPi Kanan" :modelValue="form.utpiKanan" @update:modelValue="val => form.utpiKanan = val" />
+          <FormInput id="utpiKiri" label="UtPi Kiri" :modelValue="form.utpiKiri"
+            @update:modelValue="val => form.utpiKiri = val" />
+          <FormInput id="utpiKanan" label="UtPi Kanan" :modelValue="form.utpiKanan"
+            @update:modelValue="val => form.utpiKanan = val" />
         </div>
 
         <div class="border-t border-dashed border-gray-400 my-6"></div>
-        
+
         <!-- USG OPH -->
         <h2 class="text-lg font-semibold mb-8">Ophtalmica USG</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -267,32 +274,36 @@
       <div v-if="peResult.result !== null" class="mb-8">
         <h2 class="text-lg font-semibold mb-2">Hasil Perhitungan</h2>
 
-        <div
-          class="p-4 rounded-lg text-center border"
-          :class="riskStatus.isHighRisk
-            ? 'bg-red-50 border-red-200'
-            : 'bg-green-50 border-green-200'"
-        >
+        <div class="p-4 rounded-lg text-center border" :class="{
+          'bg-red-50 border-red-200': riskStatus.level === 'high',
+          'bg-yellow-50 border-yellow-200': riskStatus.level === 'moderate',
+          'bg-green-50 border-green-200': riskStatus.level === 'low'
+        }">
+
           <p class="text-sm text-gray-600 mb-1">
             Nilai Risiko Pre-Eklampsia
           </p>
 
-          <p
-            class="text-3xl font-bold"
-            :class="riskStatus.isHighRisk
-              ? 'text-red-700'
-              : 'text-green-700'"
-          >
+          <p class="text-3xl font-bold" :class="{
+            'text-red-700': riskStatus.level === 'high',
+            'text-yellow-700': riskStatus.level === 'moderate',
+            'text-green-700': riskStatus.level === 'low'
+          }">
             {{ Number(peResult.result).toFixed(2) }}
           </p>
 
-          <p
-            class="mt-2 text-sm font-semibold"
-            :class="riskStatus.isHighRisk
-              ? 'text-red-600'
-              : 'text-green-600'"
-          >
-             {{ riskStatus.isHighRisk ? 'RISIKO TINGGI' : 'RISIKO RENDAH' }}
+          <p class="mt-2 text-sm font-semibold" :class="{
+            'text-red-600': riskStatus.level === 'high',
+            'text-yellow-600': riskStatus.level === 'moderate',
+            'text-green-600': riskStatus.level === 'low'
+          }">
+            {{
+              riskStatus.level === 'high'
+                ? 'RISIKO TINGGI'
+                : riskStatus.level === 'moderate'
+                  ? 'RISIKO SEDANG'
+            : 'RISIKO RENDAH'
+            }}
           </p>
         </div>
       </div>
@@ -315,105 +326,105 @@ import FormSelect from '../components/FormSelect.vue'
 import { validateForm } from '../utils/validation'
 import { submitFormDataDoctor, submitFormDataNurse, getLatestPeCalculatorByEmail } from '../services/api'
 
-const mockApiPayloads = [
-  // ===== 1. ORIGINAL (baseline) =====
-  {
-    nama: 'Test Pasien 1',
-    email: 'test1@example.com',
-    noHp: '081234567890',
-    namaFaskes: 'IPI',
-    namaNakes: 'Vania',
-    noHpNakes: '081165890712',
-    emailNakes: 'dummy.nakes@gmail.com',
-    hpht: '2026-01-01',
-    hpl: '',
-    kehamilanPertama: '0',
-    tglLahir: '2002-05-10',
-    itervalKehamilan: '0',
-    conceptionMethod: '0',
-    riwayatHamilPe: '0',
-    riwayatdiabetesMelitus: '0',
-    riwayatHipertensiKronik: '0',
-    riwayatIbuSaudaraPerempuanPe: '0',
-    systoleKiri1: '110',
-    diastoleKiri1: '90',
-    systoleKanan1: '110',
-    diastoleKanan1: '90',
-    systoleKiri2: '110',
-    diastoleKiri2: '90',
-    systoleKanan2: '110',
-    diastoleKanan2: '90',
-    tinggi: '153',
-    berat: '53',
-    utpiKanan: '1.38',
-    utpiKiri: '1.28',
-    vel1: '40.4',
-    vel2: '10.3',
-  },
+// const mockApiPayloads = [
+//   // ===== 1. ORIGINAL (baseline) =====
+//   {
+//     nama: 'Test Pasien 1',
+//     email: 'test1@example.com',
+//     noHp: '081234567890',
+//     namaFaskes: 'IPI',
+//     namaNakes: 'Vania',
+//     noHpNakes: '081165890712',
+//     emailNakes: 'dummy.nakes@gmail.com',
+//     hpht: '2026-01-01',
+//     hpl: '',
+//     kehamilanPertama: '0',
+//     tglLahir: '2002-05-10',
+//     itervalKehamilan: '0',
+//     conceptionMethod: '0',
+//     riwayatHamilPe: '0',
+//     riwayatdiabetesMelitus: '0',
+//     riwayatHipertensiKronik: '0',
+//     riwayatIbuSaudaraPerempuanPe: '0',
+//     systoleKiri1: '110',
+//     diastoleKiri1: '90',
+//     systoleKanan1: '110',
+//     diastoleKanan1: '90',
+//     systoleKiri2: '110',
+//     diastoleKiri2: '90',
+//     systoleKanan2: '110',
+//     diastoleKanan2: '90',
+//     tinggi: '153',
+//     berat: '53',
+//     utpiKanan: '1.38',
+//     utpiKiri: '1.28',
+//     vel1: '40.4',
+//     vel2: '10.3',
+//   },
 
-  // ===== 2–30. GENERATED VARIANTS =====
-  ...Array.from({ length: 29 }, (_, i) => {
-    const idx = i + 2
-    return {
-      nama: `Test Pasien ${idx}`,
-      email: `test${idx}@example.com`,
-      noHp: `081300000${100 + idx}`,
-      namaFaskes: idx % 2 === 0 ? 'RS Ibu & Anak' : 'Puskesmas',
-      namaNakes: idx % 2 === 0 ? 'Dr. Sari' : 'Bidan Lina',
-      noHpNakes: `081200000${200 + idx}`,
-      emailNakes: `nakes${idx}@example.com`,
-      hpht: '2026-01-01',
-      hpl: '',
-      kehamilanPertama: idx % 2 === 0 ? '1' : '0',
-      tglLahir: `19${90 + (idx % 10)}-0${(idx % 9) + 1}-15`,
-      itervalKehamilan: idx % 3 === 0 ? '1' : '0',
-      conceptionMethod: idx % 4 === 0 ? '1' : '0',
-      riwayatHamilPe: idx % 5 === 0 ? '1' : '0',
-      riwayatdiabetesMelitus: idx % 6 === 0 ? '1' : '0',
-      riwayatHipertensiKronik: idx % 7 === 0 ? '1' : '0',
-      riwayatIbuSaudaraPerempuanPe: idx % 8 === 0 ? '1' : '0',
-      systoleKiri1: String(105 + (idx % 30)),
-      diastoleKiri1: String(70 + (idx % 20)),
-      systoleKanan1: String(108 + (idx % 30)),
-      diastoleKanan1: String(72 + (idx % 20)),
-      systoleKiri2: String(107 + (idx % 30)),
-      diastoleKiri2: String(75 + (idx % 20)),
-      systoleKanan2: String(109 + (idx % 30)),
-      diastoleKanan2: String(77 + (idx % 20)),
-      tinggi: String(145 + (idx % 20)),
-      berat: String(45 + (idx % 25)),
-      utpiKanan: (1.1 + (idx % 5) * 0.15).toFixed(2),
-      utpiKiri: (1.0 + (idx % 5) * 0.14).toFixed(2),
-      vel1: (35 + (idx % 10) * 1.5).toFixed(1),
-      vel2: (8 + (idx % 6) * 1.1).toFixed(1),
-    }
-  })
-]
+//   // ===== 2–30. GENERATED VARIANTS =====
+//   ...Array.from({ length: 29 }, (_, i) => {
+//     const idx = i + 2
+//     return {
+//       nama: `Test Pasien ${idx}`,
+//       email: `test${idx}@example.com`,
+//       noHp: `081300000${100 + idx}`,
+//       namaFaskes: idx % 2 === 0 ? 'RS Ibu & Anak' : 'Puskesmas',
+//       namaNakes: idx % 2 === 0 ? 'Dr. Sari' : 'Bidan Lina',
+//       noHpNakes: `081200000${200 + idx}`,
+//       emailNakes: `nakes${idx}@example.com`,
+//       hpht: '2026-01-01',
+//       hpl: '',
+//       kehamilanPertama: idx % 2 === 0 ? '1' : '0',
+//       tglLahir: `19${90 + (idx % 10)}-0${(idx % 9) + 1}-15`,
+//       itervalKehamilan: idx % 3 === 0 ? '1' : '0',
+//       conceptionMethod: idx % 4 === 0 ? '1' : '0',
+//       riwayatHamilPe: idx % 5 === 0 ? '1' : '0',
+//       riwayatdiabetesMelitus: idx % 6 === 0 ? '1' : '0',
+//       riwayatHipertensiKronik: idx % 7 === 0 ? '1' : '0',
+//       riwayatIbuSaudaraPerempuanPe: idx % 8 === 0 ? '1' : '0',
+//       systoleKiri1: String(105 + (idx % 30)),
+//       diastoleKiri1: String(70 + (idx % 20)),
+//       systoleKanan1: String(108 + (idx % 30)),
+//       diastoleKanan1: String(72 + (idx % 20)),
+//       systoleKiri2: String(107 + (idx % 30)),
+//       diastoleKiri2: String(75 + (idx % 20)),
+//       systoleKanan2: String(109 + (idx % 30)),
+//       diastoleKanan2: String(77 + (idx % 20)),
+//       tinggi: String(145 + (idx % 20)),
+//       berat: String(45 + (idx % 25)),
+//       utpiKanan: (1.1 + (idx % 5) * 0.15).toFixed(2),
+//       utpiKiri: (1.0 + (idx % 5) * 0.14).toFixed(2),
+//       vel1: (35 + (idx % 10) * 1.5).toFixed(1),
+//       vel2: (8 + (idx % 6) * 1.1).toFixed(1),
+//     }
+//   })
+// ]
 
 
-let index = ref(0)
+// let index = ref(0)
 
-const autofillNextPayload = () => {
-  const payload = mockApiPayloads[index.value % mockApiPayloads.length]
+// const autofillNextPayload = () => {
+//   const payload = mockApiPayloads[index.value % mockApiPayloads.length]
 
-  Object.keys(form.value).forEach((key) => {
-    if (payload[key] !== undefined) {
-      form.value[key] = payload[key]
-    }
-  })
+//   Object.keys(form.value).forEach((key) => {
+//     if (payload[key] !== undefined) {
+//       form.value[key] = payload[key]
+//     }
+//   })
 
-  // index odd → dokter, even → bidan
-  // userRole.value.userRole = index % 2 === 1 ? 'dokter' : 'bidan'
-  userRole.value.userRole = 'dokter'
-}
+//   // index odd → dokter, even → bidan
+//   // userRole.value.userRole = index % 2 === 1 ? 'dokter' : 'bidan'
+//   userRole.value.userRole = 'dokter'
+// }
 
-onMounted(() => {
-  autofillNextPayload()
-})
+// onMounted(() => {
+//   autofillNextPayload()
+// })
 
 const userRole = ref({
   userRole: ''
-}) // initial: nothing selected
+})
 
 const userRoleOptions = [
   { text: 'Dokter', value: 'dokter' },
@@ -462,22 +473,22 @@ const form = ref({
   plgf: '',
 
   // Nurse Section questionaire
-  multiparaPasanganBaru: '',              
-  teknologiReproduksi: '',               
-  usiaLebih35: '',                       
-  nulipara: '',                           
-  jarakKehamilanLebih10: '',              
-  riwayatPeKeluarga: '',                  
-  obesitasSebelumHamil: '',               
-  riwayatPeSebelumnya: '',                
-  kehamilanMultipel: '',                  
-  diabetesKehamilan: '',                  
-  hipertensiKronik: '',                   
-  penyakitGinjal: '',                    
-  autoimunSLE: '',                        
-  antiphospholipidSyndrome: '',           
-  meanArterialPressure: '',               
-  proteinuria: ''         
+  multiparaPasanganBaru: '',
+  teknologiReproduksi: '',
+  usiaLebih35: '',
+  nulipara: '',
+  jarakKehamilanLebih10: '',
+  riwayatPeKeluarga: '',
+  obesitasSebelumHamil: '',
+  riwayatPeSebelumnya: '',
+  kehamilanMultipel: '',
+  diabetesKehamilan: '',
+  hipertensiKronik: '',
+  penyakitGinjal: '',
+  autoimunSLE: '',
+  antiphospholipidSyndrome: '',
+  meanArterialPressure: '',
+  proteinuria: ''
 })
 
 const yesNoOptions = [
@@ -521,7 +532,7 @@ const bmiData = computed(() => {
 
 const ophFinal = computed(() => {
   const vel1 = Number(form.value.vel1)
-  const vel2 =  Number(form.value.vel2)
+  const vel2 = Number(form.value.vel2)
 
   if (!vel1 || !vel2) return null
 
@@ -545,33 +556,69 @@ const peResult = ref({
 const riskStatus = computed(() => {
   const result = Number(peResult.value.result)
   const usia = Number(peResult.value.usiaKehamilan)
+  const role = userRole.value.userRole
 
-  if (!result || !usia) {
+  // Always return safe default first
+  if (!role || peResult.value.result === null) {
     return {
       level: null,
       isHighRisk: false
     }
   }
 
-  // Rule 1
-  if (usia < 34) {
+  if (role === 'dokter') {
+
+    if (!result || !usia) {
+      return {
+        level: null,
+        isHighRisk: false
+      }
+    }
+
+    if (usia < 34) {
+      return {
+        level: result <= 49 ? 'high' : 'low',
+        isHighRisk: result <= 49
+      }
+    }
+
+    if (usia >= 34 && usia < 37) {
+      return {
+        level: result <= 13 ? 'high' : 'low',
+        isHighRisk: result <= 13
+      }
+    }
+
     return {
-      level: result <= 49 ? 'high' : 'low',
-      isHighRisk: result <= 49
+      level: 'low',
+      isHighRisk: false
     }
   }
 
-  // Rule 2
-  if (usia >= 34 && usia < 37) {
+  if (role === 'bidan') {
+
+    if (result >= 2) {
+      return {
+        level: 'high',
+        isHighRisk: true
+      }
+    }
+
+    if (result == 1) {
+      return {
+        level: 'moderate',
+        isHighRisk: false
+      }
+    }
+
     return {
-      level: result <= 13 ? 'high' : 'low',
-      isHighRisk: result <= 13
+      level: 'low',
+      isHighRisk: false
     }
   }
 
-  // Default (≥ 37 weeks → treat as low risk unless specified later)
   return {
-    level: 'low',
+    level: null,
     isHighRisk: false
   }
 })
@@ -614,6 +661,10 @@ const submitForm = async () => {
       systoleKanan2: String(form.value.systoleKanan2),
       diastoleKanan2: String(form.value.diastoleKanan2),
       bmi: String(bmiData.value),
+      utpiKiri: form.value.utpiKiri,
+      utpiKanan: form.value.utpiKanan,
+      vel1: form.value.vel1,
+      vel2: form.value.vel2,
       utpi: String(utpiFinal.value),
       oph: String(ophFinal.value),
       plgf: String(form.value.plgf)
@@ -683,13 +734,16 @@ const submitForm = async () => {
 
       // alert(`Hasil Risiko Pre-Eklampsia: ${peResult.value}`)
 
-      index.value++
-      autofillNextPayload()
+      // index.value++
+      // autofillNextPayload()
 
       alert('Form berhasil dikirim!')
 
 
     } else if (userRole.value.userRole == 'bidan') {
+
+      console.log('PE Request:', payloadNurse)
+
       const response = await submitFormDataNurse(payloadNurse)
 
       peResult.value.result = response?.data?.data?.result ?? null
