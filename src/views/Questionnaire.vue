@@ -730,7 +730,7 @@ const submitForm = async () => {
       peResult.value.result = response?.data?.data?.result ?? null
       peResult.value.usiaKehamilan = response?.data?.data?.usiaKehamilan ?? null
 
-      // console.log('PE Result:', peResult.value)
+      console.log('PE Result:', peResult.value)
 
       // alert(`Hasil Risiko Pre-Eklampsia: ${peResult.value}`)
 
@@ -748,6 +748,8 @@ const submitForm = async () => {
 
       peResult.value.result = response?.data?.data?.result ?? null
       peResult.value.usiaKehamilan = response?.data?.data?.usiaKehamilan ?? null
+
+      console.log('PE Result:', peResult.value)
 
       // indexNurse.value++
       // autofillNextPayloadNurse()
