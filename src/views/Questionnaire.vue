@@ -660,6 +660,8 @@ const submitForm = async () => {
       diastoleKiri2: String(form.value.diastoleKiri2),
       systoleKanan2: String(form.value.systoleKanan2),
       diastoleKanan2: String(form.value.diastoleKanan2),
+      weight: form.value.berat,
+      height: form.value.tinggi,
       bmi: String(bmiData.value),
       utpiKiri: form.value.utpiKiri,
       utpiKanan: form.value.utpiKanan,
