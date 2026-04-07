@@ -10,23 +10,23 @@
 
       <!-- Personal Info -->
       <div class="grid grid-cols-1 gap-4 mb-8">
-        <FormInput id="nama" label="Nama" :modelValue="form.nama" @update:modelValue="val => form.nama = val" />
-        <FormInput id="email" label="Email" :modelValue="form.email" @update:modelValue="val => form.email = val" />
-        <FormInput id="noHp" label="No HP" :modelValue="form.noHp" @update:modelValue="val => form.noHp = val" />
+        <FormInput id="nama" label="Nama" :modelValue="form.nama" @update:modelValue="val => form.nama = val" :disabled="isSubmitted"/>
+        <FormInput id="email" label="Email" :modelValue="form.email" @update:modelValue="val => form.email = val" :disabled="isSubmitted"/>
+        <FormInput id="noHp" label="No HP" :modelValue="form.noHp" @update:modelValue="val => form.noHp = val" :disabled="isSubmitted"/>
         <FormInput id="namaFaskes" label="Nama Faskes" :modelValue="form.namaFaskes"
-          @update:modelValue="val => form.namaFaskes = val" />
+          @update:modelValue="val => form.namaFaskes = val" :disabled="isSubmitted"/>
         <FormInput id="namaNakes" label="Nama Nakes" :modelValue="form.namaNakes"
-          @update:modelValue="val => form.namaNakes = val" />
+          @update:modelValue="val => form.namaNakes = val" :disabled="isSubmitted"/>
         <FormInput id="noHpNakes" label="No HP Nakes" :modelValue="form.noHpNakes"
-          @update:modelValue="val => form.noHpNakes = val" />
+          @update:modelValue="val => form.noHpNakes = val" :disabled="isSubmitted"/>
         <FormInput id="emailNakes" label="Email Nakes" :modelValue="form.emailNakes"
-          @update:modelValue="val => form.emailNakes = val" />
+          @update:modelValue="val => form.emailNakes = val" :disabled="isSubmitted"/>
       </div>
 
       <!-- userRole Selector -->
       <div class="mb-8">
         <FormSelect id="userRole" label="Dokter atau Bidan?" :modelValue="userRole.userRole"
-          @update:modelValue="val => userRole.userRole = val" :options="userRoleOptions" />
+          @update:modelValue="val => userRole.userRole = val" :options="userRoleOptions" :disabled="isSubmitted"/>
       </div>
 
       <div v-if="userRole.userRole === 'dokter'" :key="userRole.userRole">
@@ -37,33 +37,33 @@
         <!-- Questionnaire -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           <FormInput id="tglLahir" label="Tanggal Lahir" type="date" :modelValue="form.tglLahir"
-            @update:modelValue="val => form.tglLahir = val" />
+            @update:modelValue="val => form.tglLahir = val" :disabled="isSubmitted"/>
           <FormInput id="hpht" label="HPHT" type="date" :modelValue="form.hpht"
-            @update:modelValue="val => form.hpht = val" />
+            @update:modelValue="val => form.hpht = val" :disabled="isSubmitted"/>
           <FormInput id="hpl" label="HPL" type="date" :modelValue="form.hpl"
-            @update:modelValue="val => form.hpl = val" />
+            @update:modelValue="val => form.hpl = val" :disabled="isSubmitted"/>
           <FormSelect id="kehamilanPertama" label="Kehamilan Pertama" :modelValue="form.kehamilanPertama"
-            @update:modelValue="val => form.kehamilanPertama = val" :options="kehamilanPertamaOptions" />
+            @update:modelValue="val => form.kehamilanPertama = val" :options="kehamilanPertamaOptions" :disabled="isSubmitted"/>
           <!-- <FormInput id="usiaIbu" label="Usia Ibu" type="number" :modelValue="form.usiaIbu"
           @update:modelValue="val => form.usiaIbu = val" /> -->
           <!-- <FormInput id="intervalKehamilan" label="Interval Kehamilan (Tahun)" type="number"
           :modelValue="form.itervalKehamilan" @update:modelValue="val => form.itervalKehamilan = val" /> -->
           <FormSelect id="intervalKehamilan" label="Interval Kehamilan" :modelValue="form.itervalKehamilan"
-            @update:modelValue="val => form.itervalKehamilan = val" :options="interval" />
+            @update:modelValue="val => form.itervalKehamilan = val" :options="interval" :disabled="isSubmitted"/>
           <FormSelect id="conceptionMethod" label="Conception Method (Cara Kehamilan)"
             :modelValue="form.conceptionMethod" @update:modelValue="val => form.conceptionMethod = val"
-            :options="conceptionOptions" />
+            :options="conceptionOptions" :disabled="isSubmitted"/>
           <FormSelect id="riwayatHamilPe" label="Riwayat Hamil Dengan PE" :modelValue="form.riwayatHamilPe"
-            @update:modelValue="val => form.riwayatHamilPe = val" :options="yesNoOptions" />
+            @update:modelValue="val => form.riwayatHamilPe = val" :options="yesNoOptions" :disabled="isSubmitted"/>
           <FormSelect id="riwayatDiabetesMelitus" label="Riwayat Diabetes Melitus"
             :modelValue="form.riwayatdiabetesMelitus" @update:modelValue="val => form.riwayatdiabetesMelitus = val"
-            :options="yesNoOptions" />
+            :options="yesNoOptions" :disabled="isSubmitted"/>
           <FormSelect id="riwayatHipertensiKronik" label="Riwayat Hipertensi Kronik"
             :modelValue="form.riwayatHipertensiKronik" @update:modelValue="val => form.riwayatHipertensiKronik = val"
-            :options="yesNoOptions" />
+            :options="yesNoOptions" :disabled="isSubmitted"/>
           <FormSelect id="riwayatIbuSaudaraPerempuanPe" label="Riwayat Ibu/Saudara Perempuan PE"
             :modelValue="form.riwayatIbuSaudaraPerempuanPe"
-            @update:modelValue="val => form.riwayatIbuSaudaraPerempuanPe = val" :options="yesNoOptions" />
+            @update:modelValue="val => form.riwayatIbuSaudaraPerempuanPe = val" :options="yesNoOptions" :disabled="isSubmitted"/>
         </div>
       </div>
 
@@ -79,65 +79,65 @@
           <!-- Multipara Dengan Kehamilan oleh Pasangan Baru -->
           <FormSelect id="multiparaPasanganBaru" label="Multipara dengan Pasangan Baru"
             :modelValue="form.multiparaPasanganBaru" @update:modelValue="val => form.multiparaPasanganBaru = val"
-            :options="yesNoOptionsNurseLowRisk" />
+            :options="yesNoOptionsNurseLowRisk" :disabled="isSubmitted"/>
 
           <!-- Kehamilan dengan Teknologi Reproduksi Berbantu -->
           <FormSelect id="teknologiReproduksi" label="Kehamilan dengan Teknologi Reproduksi Berbantu"
             :modelValue="form.teknologiReproduksi" @update:modelValue="val => form.teknologiReproduksi = val"
-            :options="yesNoOptionsNurseLowRisk" />
+            :options="yesNoOptionsNurseLowRisk" :disabled="isSubmitted"/>
 
           <!-- Umur ≥ 35 Tahun -->
           <FormSelect id="usiaLebih35" label="Usia Ibu ≥ 35 Tahun" :modelValue="form.usiaLebih35"
-            @update:modelValue="val => form.usiaLebih35 = val" :options="yesNoOptionsNurseLowRisk" />
+            @update:modelValue="val => form.usiaLebih35 = val" :options="yesNoOptionsNurseLowRisk" :disabled="isSubmitted"/>
 
           <!-- Nulipara -->
           <FormSelect id="nulipara" label="Nulipara" :modelValue="form.nulipara"
-            @update:modelValue="val => form.nulipara = val" :options="yesNoOptionsNurseLowRisk" />
+            @update:modelValue="val => form.nulipara = val" :options="yesNoOptionsNurseLowRisk" :disabled="isSubmitted"/>
 
           <!-- Multipara Jarak Kehamilan > 10 Tahun -->
           <FormSelect id="jarakKehamilanLebih10" label="Jarak Kehamilan Sebelumnya > 10 Tahun"
             :modelValue="form.jarakKehamilanLebih10" @update:modelValue="val => form.jarakKehamilanLebih10 = val"
-            :options="yesNoOptionsNurseLowRisk" />
+            :options="yesNoOptionsNurseLowRisk" :disabled="isSubmitted"/>
 
           <!-- Riwayat Preeklampsia Ibu / Saudara -->
           <FormSelect id="riwayatPeKeluarga" label="Riwayat Preeklampsia pada Ibu / Saudara Perempuan"
             :modelValue="form.riwayatPeKeluarga" @update:modelValue="val => form.riwayatPeKeluarga = val"
-            :options="yesNoOptionsNurseLowRisk" />
+            :options="yesNoOptionsNurseLowRisk" :disabled="isSubmitted"/>
 
           <!-- Obesitas Sebelum Hamil -->
           <FormSelect id="obesitasSebelumHamil" label="Obesitas Sebelum Hamil (IMT > 30)"
             :modelValue="form.obesitasSebelumHamil" @update:modelValue="val => form.obesitasSebelumHamil = val"
-            :options="yesNoOptionsNurseLowRisk" />
+            :options="yesNoOptionsNurseLowRisk" :disabled="isSubmitted"/>
 
           <!-- Riwayat Preeklampsia Sebelumnya -->
           <FormSelect id="riwayatPeSebelumnya" label="Riwayat Preeklampsia Sebelumnya"
             :modelValue="form.riwayatPeSebelumnya" @update:modelValue="val => form.riwayatPeSebelumnya = val"
-            :options="yesNoOptionsNurseHighRisk" />
+            :options="yesNoOptionsNurseHighRisk" :disabled="isSubmitted"/>
 
           <!-- Kehamilan Multipel -->
           <FormSelect id="kehamilanMultipel" label="Kehamilan Multipel" :modelValue="form.kehamilanMultipel"
-            @update:modelValue="val => form.kehamilanMultipel = val" :options="yesNoOptionsNurseHighRisk" />
+            @update:modelValue="val => form.kehamilanMultipel = val" :options="yesNoOptionsNurseHighRisk" :disabled="isSubmitted"/>
 
           <!-- Diabetes dalam Kehamilan -->
           <FormSelect id="diabetesKehamilan" label="Diabetes dalam Kehamilan" :modelValue="form.diabetesKehamilan"
-            @update:modelValue="val => form.diabetesKehamilan = val" :options="yesNoOptionsNurseHighRisk" />
+            @update:modelValue="val => form.diabetesKehamilan = val" :options="yesNoOptionsNurseHighRisk" :disabled="isSubmitted"/>
 
           <!-- Hipertensi Kronik -->
           <FormSelect id="hipertensiKronik" label="Hipertensi Kronik" :modelValue="form.hipertensiKronik"
-            @update:modelValue="val => form.hipertensiKronik = val" :options="yesNoOptionsNurseHighRisk" />
+            @update:modelValue="val => form.hipertensiKronik = val" :options="yesNoOptionsNurseHighRisk" :disabled="isSubmitted"/>
 
           <!-- Penyakit Ginjal -->
           <FormSelect id="penyakitGinjal" label="Penyakit Ginjal" :modelValue="form.penyakitGinjal"
-            @update:modelValue="val => form.penyakitGinjal = val" :options="yesNoOptionsNurseHighRisk" />
+            @update:modelValue="val => form.penyakitGinjal = val" :options="yesNoOptionsNurseHighRisk" :disabled="isSubmitted"/>
 
           <!-- Penyakit Autoimun / SLE -->
           <FormSelect id="autoimunSLE" label="Penyakit Autoimun (SLE)" :modelValue="form.autoimunSLE"
-            @update:modelValue="val => form.autoimunSLE = val" :options="yesNoOptionsNurseHighRisk" />
+            @update:modelValue="val => form.autoimunSLE = val" :options="yesNoOptionsNurseHighRisk" :disabled="isSubmitted"/>
 
           <!-- Antiphospholipid Syndrome -->
           <FormSelect id="antiphospholipidSyndrome" label="Antiphospholipid Syndrome"
             :modelValue="form.antiphospholipidSyndrome" @update:modelValue="val => form.antiphospholipidSyndrome = val"
-            :options="yesNoOptionsNurseHighRisk" />
+            :options="yesNoOptionsNurseHighRisk" :disabled="isSubmitted"/>
 
           <!-- Mean Arterial Pressure -->
           <!-- <FormInput id="meanArterialPressure" label="Mean Arterial Pressure (mmHg)" type="number"
@@ -145,7 +145,7 @@
 
           <!-- Proteinuria -->
           <FormSelect id="proteinuria" label="Proteinuria" :modelValue="form.proteinuria"
-            @update:modelValue="val => form.proteinuria = val" :options="yesNoOptionsNurseHighRisk" />
+            @update:modelValue="val => form.proteinuria = val" :options="yesNoOptionsNurseHighRisk" :disabled="isSubmitted"/>
         </div>
       </div>
 
@@ -169,12 +169,12 @@
             <span class="text-sm font-medium">Systole I</span>
             <div class="flex justify-center items-center gap-1">
               <FormInput type="number" :modelValue="form.systoleKiri1"
-                @update:modelValue="val => form.systoleKiri1 = val" class="w-24" />
+                @update:modelValue="val => form.systoleKiri1 = val" class="w-24" :disabled="isSubmitted"/>
               <span class="text-sm">mm/Hg</span>
             </div>
             <div class="flex justify-center items-center gap-1">
               <FormInput type="number" :modelValue="form.systoleKanan1"
-                @update:modelValue="val => form.systoleKanan1 = val" class="w-24" />
+                @update:modelValue="val => form.systoleKanan1 = val" class="w-24" :disabled="isSubmitted"/>
               <span class="text-sm">mm/Hg</span>
             </div>
           </div>
@@ -184,12 +184,12 @@
             <span class="text-sm font-medium">Diastole I</span>
             <div class="flex justify-center items-center gap-1">
               <FormInput type="number" :modelValue="form.diastoleKiri1"
-                @update:modelValue="val => form.diastoleKiri1 = val" class="w-24" />
+                @update:modelValue="val => form.diastoleKiri1 = val" class="w-24" :disabled="isSubmitted"/>
               <span class="text-sm">mm/Hg</span>
             </div>
             <div class="flex justify-center items-center gap-1">
               <FormInput type="number" :modelValue="form.diastoleKanan1"
-                @update:modelValue="val => form.diastoleKanan1 = val" class="w-24" />
+                @update:modelValue="val => form.diastoleKanan1 = val" class="w-24" :disabled="isSubmitted"/>
               <span class="text-sm">mm/Hg</span>
             </div>
           </div>
@@ -203,12 +203,12 @@
             <span class="text-sm font-medium">Systole II</span>
             <div class="flex justify-center items-center gap-1">
               <FormInput type="number" :modelValue="form.systoleKiri2"
-                @update:modelValue="val => form.systoleKiri2 = val" class="w-24" />
+                @update:modelValue="val => form.systoleKiri2 = val" class="w-24" :disabled="isSubmitted"/>
               <span class="text-sm">mm/Hg</span>
             </div>
             <div class="flex justify-center items-center gap-1">
               <FormInput type="number" :modelValue="form.systoleKanan2"
-                @update:modelValue="val => form.systoleKanan2 = val" class="w-24" />
+                @update:modelValue="val => form.systoleKanan2 = val" class="w-24" :disabled="isSubmitted"/>
               <span class="text-sm">mm/Hg</span>
             </div>
           </div>
@@ -218,12 +218,12 @@
             <span class="text-sm font-medium">Diastole II</span>
             <div class="flex justify-center items-center gap-1">
               <FormInput type="number" :modelValue="form.diastoleKiri2"
-                @update:modelValue="val => form.diastoleKiri2 = val" class="w-24" />
+                @update:modelValue="val => form.diastoleKiri2 = val" class="w-24" :disabled="isSubmitted"/>
               <span class="text-sm">mm/Hg</span>
             </div>
             <div class="flex justify-center items-center gap-1">
               <FormInput type="number" :modelValue="form.diastoleKanan2"
-                @update:modelValue="val => form.diastoleKanan2 = val" class="w-24" />
+                @update:modelValue="val => form.diastoleKanan2 = val" class="w-24" :disabled="isSubmitted"/>
               <span class="text-sm">mm/Hg</span>
             </div>
           </div>
@@ -233,9 +233,9 @@
         <div v-if="userRole.userRole === 'dokter'" :key="userRole.userRole"
           class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           <FormInput id="tinggi" label="Tingi Badan (cm)" type="number" :modelValue="form.tinggi"
-            @update:modelValue="val => form.tinggi = val" />
+            @update:modelValue="val => form.tinggi = val" :disabled="isSubmitted"/>
           <FormInput id="berat" label="Berat Badan (kg)" type="number" :modelValue="form.berat"
-            @update:modelValue="val => form.berat = val" />
+            @update:modelValue="val => form.berat = val" :disabled="isSubmitted"/>
         </div>
 
       </div>
@@ -247,9 +247,9 @@
         <h2 class="text-lg font-semibold mb-8">UtPi USG</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormInput id="utpiKiri" label="UtPi Kiri" :modelValue="form.utpiKiri"
-            @update:modelValue="val => form.utpiKiri = val" />
+            @update:modelValue="val => form.utpiKiri = val" :disabled="isSubmitted"/>
           <FormInput id="utpiKanan" label="UtPi Kanan" :modelValue="form.utpiKanan"
-            @update:modelValue="val => form.utpiKanan = val" />
+            @update:modelValue="val => form.utpiKanan = val" :disabled="isSubmitted"/>
         </div>
 
         <div class="border-t border-dashed border-gray-400 my-6"></div>
@@ -257,8 +257,8 @@
         <!-- USG OPH -->
         <h2 class="text-lg font-semibold mb-8">Ophtalmica USG</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormInput id="vel1" label="Vel 1" :modelValue="form.vel1" @update:modelValue="val => form.vel1 = val" />
-          <FormInput id="vel2" label="Vel 2" :modelValue="form.vel2" @update:modelValue="val => form.vel2 = val" />
+          <FormInput id="vel1" label="Vel 1" :modelValue="form.vel1" @update:modelValue="val => form.vel1 = val" :disabled="isSubmitted"/>
+          <FormInput id="vel2" label="Vel 2" :modelValue="form.vel2" @update:modelValue="val => form.vel2 = val" :disabled="isSubmitted"/>
         </div>
 
         <div class="border-t border-dashed border-gray-400 my-6"></div>
@@ -266,7 +266,7 @@
         <!-- Lab Test -->
         <h2 class="text-lg font-semibold mb-4">Tes Lab</h2>
         <div class="mb-8">
-          <FormInput id="plgf" label="PLGF" :modelValue="form.plgf" @update:modelValue="val => form.plgf = val" />
+          <FormInput id="plgf" label="PLGF" :modelValue="form.plgf" @update:modelValue="val => form.plgf = val" :disabled="isSubmitted"/>
         </div>
       </div>
 
@@ -310,9 +310,25 @@
 
 
       <!-- Submit Button -->
-      <button @click="submitForm" :disabled="!userRole"
-        class="w-full bg-green-700 text-white py-2 px-4 rounded hover:bg-green-700">
+      <button 
+        @click="submitForm"
+        :disabled="isSubmitted || !userRole.userRole"
+        class="w-full py-2 px-4 rounded text-white transition"
+        :class="[
+          isSubmitted 
+            ? 'bg-green-700 opacity-70 cursor-not-allowed'
+            : 'bg-green-700 hover:bg-green-800'
+        ]"
+      >
         Kirim
+      </button>
+
+      <button 
+        v-if="isSubmitted"
+        @click="resetForm"
+        class="w-full mt-4 bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
+      >
+        Reset Form
       </button>
     </div>
   </div>
@@ -422,6 +438,8 @@ import { submitFormDataDoctor, submitFormDataNurse, getLatestPeCalculatorByEmail
 //   autofillNextPayload()
 // })
 
+const isSubmitted = ref(false)
+
 const userRole = ref({
   userRole: ''
 })
@@ -431,7 +449,7 @@ const userRoleOptions = [
   { text: 'Bidan', value: 'bidan' }
 ]
 
-const form = ref({
+const getInitialForm = () => ({
 
   // Genaral Info
   nama: '',
@@ -491,6 +509,8 @@ const form = ref({
   proteinuria: ''
 })
 
+const form = ref(getInitialForm())
+
 const yesNoOptions = [
   { text: 'Ya', value: '1' },
   { text: 'Tidak', value: '0' }
@@ -547,6 +567,19 @@ const utpiFinal = computed(() => {
 
   return ((utpiKanan + utpiKiri) / 2).toFixed(2)
 })
+
+const resetForm = () => {
+  form.value = getInitialForm()
+
+  userRole.value.userRole = ''
+
+  peResult.value = {
+    result: null,
+    usiaKehamilan: null
+  }
+
+  isSubmitted.value = false
+}
 
 const peResult = ref({
   result: null,
@@ -740,6 +773,7 @@ const submitForm = async () => {
       // autofillNextPayload()
 
       alert('Form berhasil dikirim!')
+      isSubmitted.value = true
 
 
     } else if (userRole.value.userRole == 'bidan') {
@@ -757,6 +791,7 @@ const submitForm = async () => {
       // autofillNextPayloadNurse()
 
       alert('Form berhasil dikirim!')
+      isSubmitted.value = true
 
     } else {
       alert('Form gagal dikirim!')
