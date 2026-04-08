@@ -537,9 +537,15 @@ const conceptionOptions = [
 ]
 
 const interval = [
-  { text: '> 10 Tahun/Anak Pertama', value: '1' },
-  { text: '<= 10 Tahun', value: '0' }
+  { text: '>= 10 Tahun', value: '0' },
+  { text: '< 10 Tahun/Anak Pertama', value: '1' }
 ]
+
+const peResult = ref({
+  result: null,
+  usiaKehamilan: null
+})
+
 
 const bmiData = computed(() => {
   const berat = Number(form.value.berat)
@@ -580,11 +586,6 @@ const resetForm = () => {
 
   isSubmitted.value = false
 }
-
-const peResult = ref({
-  result: null,
-  usiaKehamilan: null
-})
 
 const riskStatus = computed(() => {
   const result = Number(peResult.value.result)
